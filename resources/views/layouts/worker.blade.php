@@ -9,6 +9,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    {{-- FavIcon --}}
+    <link rel="icon" href="{{ asset('img/favicon-32x32.png') }}">
+    <link rel="icon" href="{{ asset('img/apple-icon-180x180.png') }}">
+
     <title>@yield('title', 'PasPerDok')</title>
 
     <!-- Custom fonts for this template-->
@@ -26,12 +30,13 @@
 
     @if (isset($page))
     @if ($page == 'login')
-        @yield('content')
+    @yield('content')
+    @elseif ($page == 'register')
+    @yield('content')
     @endif
     @else
     <!-- Page Wrapper -->
     <div id="wrapper">
-
         <!-- Sidebar -->
         @include('templates.worker.sidebar')
         <!-- End of Sidebar -->

@@ -25,4 +25,4 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::view('/home', 'patient.home');
 Route::view('/admin', 'admin.admin');
 
-Route::view('/login-sb', 'auth.login-2');
+Route::view('/register-sb', 'auth.register-2');
