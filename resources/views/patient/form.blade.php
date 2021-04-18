@@ -30,6 +30,38 @@
 </div>
 
 <div class="form-group row">
+    <label for="email" class="col-sm-6 col-form-label text-md-right">Email</label>
+    <div class="col-sm-6">
+        <input type="text" class="form-control" name="email" id="email"
+            value="{{ old('email') ?? $patient->user->email ?? '' }}">
+        @error('email')
+        <small class="form-text text-danger">
+            <b>{{ $message }}</b>
+        </small>
+        @enderror
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="password" class="col-sm-6 col-form-label text-md-right">password</label>
+    <div class="col-sm-6">
+        <input type="password" class="form-control" name="password" id="password">
+        @error('password')
+        <small class="form-text text-danger">
+            <b>{{ $message }}</b>
+        </small>
+        @enderror
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="password_confirmation" class="col-sm-6 col-form-label text-md-right">Konfirmasi Password</label>
+    <div class="col-sm-6">
+        <input type="text" class="form-control" name="password_confirmation" id="password_confirmation">
+    </div>
+</div>
+
+<div class="form-group row">
     <label for="tanggal_lahir" class="col-sm-6 col-form-label text-md-right">Tanggal Lahir</label>
     <div class="col-sm-6">
         <input type="number" name="tgl" id="tgl" class="form-control col-md-3 d-inline @error('email') is-invalid @enderror" placeholder="dd"
@@ -147,7 +179,7 @@
 
 <div class="form-group">
     <div class="row">
-        <div class="col offset-6">
+        <div class="col offset-sm-6">
             <button type="submit" class="btn btn-primary">{{ $button }}</button>
         </div>
     </div>

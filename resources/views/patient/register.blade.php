@@ -5,7 +5,7 @@
 @section('content')
 <div class="container mt-5">
     <div class="card mb-3">
-        <img class="card-img-top bg-register-image" height="350px">
+        <img class="card-img-top d-none d-lg-block bg-register-image" height="350px">
         <div class="card-body">
             <h5 class="card-title text-center display-4">Register Akun</h5>
             <div class="row">
