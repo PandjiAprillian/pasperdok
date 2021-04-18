@@ -37,6 +37,10 @@
 
 <body>
 
+    <!-- ======= Top Bar && Header ======= -->
+    @include('templates.patient.topbar')
+    <!-- End Header -->
+
     @yield('content')
 
     <!-- ======= Footer ======= -->

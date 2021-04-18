@@ -1,10 +1,6 @@
-@extends('layouts.master')
+@extends('layouts.user')
 
 @section('content')
-<!-- ======= Top Bar && Header ======= -->
-@include('templates.patient.topbar')
-<!-- End Header -->
-
 <!-- ======= Hero Section ======= -->
 @include('templates.patient.hero')
 <!-- End Hero -->

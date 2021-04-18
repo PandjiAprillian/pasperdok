@@ -24,12 +24,19 @@
 
         <nav class="nav-menu d-none d-lg-block">
             <ul>
+                @if (request()->is('/'))
                 <li class="active"><a href="#hero">Home</a></li>
+                @auth
+                <li><a href="{{ url('/post') }}">Post</a></li>
+                @endauth
                 <li><a href="#about">About</a></li>
                 <li><a href="#services">Services</a></li>
                 <li><a href="#departments">Departments</a></li>
                 <li><a href="#doctors">Doctors</a></li>
                 <li><a href="#contact">Contact</a></li>
+                @elseif (request()->is('post'))
+                <li><a href="{{ url('/') }}">Home</a></li>
+                @endif
                 @guest
                 <li class="drop-down"><a href="" onclick="event.preventDefault();">SignIn / SignUp</a>
                     <ul>
@@ -54,12 +61,13 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a href="#edit" class="dropdown-item px-3">Edit Profile</a>
                         <a class="dropdown-item px-3" href="{{ route('logout') }}" onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
+                            Logout
                         </a>
 
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none"">
                             @csrf
                         </form>
                     </div>
