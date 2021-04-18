@@ -37,6 +37,11 @@
 
 <body>
 
+    @if (isset($page))
+        @if ($page == 'register')
+            @yield('content')
+        @endif
+    @else
     <!-- ======= Top Bar && Header ======= -->
     @include('templates.patient.topbar')
     <!-- End Header -->
@@ -49,6 +54,7 @@
 
     <div id="preloader"></div>
     <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+    @endif
 
     <!-- Vendor JS Files -->
     <script src="/vendor/patient/jquery/jquery.min.js"></script>

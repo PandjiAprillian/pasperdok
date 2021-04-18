@@ -1,4 +1,4 @@
-@extends('layouts.worker', ['page' => 'register'])
+@extends('layouts.user', ['page' => 'register'])
 
 @section('title', 'Sign Up!')
 

@@ -31,8 +31,6 @@
     @if (isset($page))
     @if ($page == 'login')
     @yield('content')
-    @elseif ($page == 'register')
-    @yield('content')
     @endif
     @else
     <!-- Page Wrapper -->
