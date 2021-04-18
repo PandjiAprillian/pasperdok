@@ -42,6 +42,7 @@
     </div>
 </div>
 
+@if ($button == 'Sign Up')
 <div class="form-group row">
     <label for="password" class="col-sm-6 col-form-label text-md-right">password</label>
     <div class="col-sm-6">
@@ -57,20 +58,21 @@
 <div class="form-group row">
     <label for="password_confirmation" class="col-sm-6 col-form-label text-md-right">Konfirmasi Password</label>
     <div class="col-sm-6">
-        <input type="text" class="form-control" name="password_confirmation" id="password_confirmation">
+        <input type="password" class="form-control" name="password_confirmation" id="password_confirmation">
     </div>
 </div>
+@endif
 
 <div class="form-group row">
     <label for="tanggal_lahir" class="col-sm-6 col-form-label text-md-right">Tanggal Lahir</label>
     <div class="col-sm-6">
-        <input type="number" name="tgl" id="tgl" class="form-control col-md-3 d-inline @error('email') is-invalid @enderror" placeholder="dd"
+        <input type="number" name="tgl" id="tgl" class="form-control col-md-3 d-inline" placeholder="dd"
             value="{{ old('tgl') ?? $user->tgl ?? '' }}">
         @php
         $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober',
         'November', 'Desember'];
         @endphp
-        <select name="bln" id="bln" class="custom-select col-md-4 d-inline @error('email') is-invalid @enderror" style="vertical-align: baseline">
+        <select name="bln" id="bln" class="custom-select col-md-4 d-inline" style="vertical-align: baseline">
             @foreach ($months as $key => $month)
             @if ($key + 1 == (old('bln') ?? $user->bln ?? ''))
             <option value="{{ $key + 1 }}" selected>{{ $month }}</option>
@@ -79,7 +81,7 @@
             @endif
             @endforeach
         </select>
-        <input type="number" name="thn" id="thn" class="form-control col-md-3 d-inline @error('email') is-invalid @enderror" placeholder="yyyy"
+        <input type="number" name="thn" id="thn" class="form-control col-md-3 d-inline" placeholder="yyyy"
             value="{{ old('thn') ?? $user->thn ?? '' }}">
         @error('tanggal_lahir')
         <small class="form-text text-danger"><strong>{{ $message }}</strong></small>

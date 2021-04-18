@@ -10,6 +10,11 @@ class Patient extends Model
 {
     use HasFactory, HasRoles;
 
+    protected $fillable = [
+        'nik', 'nama', 'alamat', 'tanggal_lahir', 'jenis_kelamin', 'handphone',
+        'photo', 'keluhan'
+    ];
+
     public function user()
     {
         return $this->belongsTo('\App\Models\User');

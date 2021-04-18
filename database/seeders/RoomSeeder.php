@@ -17,7 +17,14 @@ class RoomSeeder extends Seeder
         $faker = \Faker\Factory::create('id_ID');
         $faker->seed(623);
 
-        for($i = 1; $i <= 30; $i++) {
+        \App\Models\Room::create(
+            [
+                'nomor_kamar' => 'smtr',
+                'maksimal'    => '2'
+            ]
+        );
+
+        for($i = 2; $i <= 29; $i++) {
             \App\Models\Room::create(
                 [
                     'nomor_kamar' => $faker->unique()->bothify('?##'),
