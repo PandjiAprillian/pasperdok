@@ -24,7 +24,7 @@ class CreatePatientsTable extends Migration
             $table->string('photo')->default('default_profile.jpg');
             $table->text('keluhan');
             $table->tinyInteger('rawat_inap')->default(0);
-            $table->foreignId('room_id')->constrained()->onDelete('cascade')->default(0);
+            $table->foreignId('room_id')->default(0)->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
