@@ -18,12 +18,13 @@ class CreatePatientsTable extends Migration
             $table->char('nik', 16)->unique();
             $table->string('nama');
             $table->text('alamat');
+            $table->date('tanggal_lahir');
             $table->char('jenis_kelamin', 1);
             $table->string('handphone', 30);
             $table->string('photo')->default('default_profile.jpg');
             $table->text('keluhan');
             $table->tinyInteger('rawat_inap')->default(0);
-            $table->foreignId('room_id')->constrained()->onDelete('cascade');
+            $table->foreignId('room_id')->constrained()->onDelete('cascade')->default(0);
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

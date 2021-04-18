@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Disease;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 
@@ -24,7 +25,9 @@ class PatientController extends Controller
      */
     public function create()
     {
-        //
+        $diseases = Disease::orderBy('nama_penyakit')->get();
+        $diseasesTaken = (auth()->check()) ? auth()->user()->patient->diseases->pluck('id')->all() : [] ;
+        return view('patient.register', compact('diseases', 'diseasesTaken'));
     }
 
     /**
@@ -35,7 +38,7 @@ class PatientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**
