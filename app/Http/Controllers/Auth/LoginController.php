@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class LoginController extends Controller
 {
@@ -44,6 +45,7 @@ class LoginController extends Controller
         if ($user->hasRole('admin')) {
             return redirect('/admin');
         } elseif ($user->hasRole('patient')) {
+            toast("Selamat datang " . $user->nama, 'success');
             return redirect('/');
         } elseif ($user->hasRole('nurse')) {
             return redirect('/nurse');

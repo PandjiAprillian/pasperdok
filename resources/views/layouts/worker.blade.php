@@ -84,7 +84,7 @@
 
     <!-- Logout Modal-->
     @include('templates.worker.logout-modal')
-    @endif
+
 
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/sb-admin/jquery/jquery.min.js"></script>
@@ -96,6 +96,8 @@
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin-2.min.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
+    @include('sweetalert::alert')
+    @endif
 
 </body>
 

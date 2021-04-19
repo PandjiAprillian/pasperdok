@@ -68,6 +68,9 @@
 
     <!-- Template Main JS File -->
     <script src="/js/main.js"></script>
+
+    {{-- SweetAlert --}}
+    @include('sweetalert::alert')
     @endif
 
 

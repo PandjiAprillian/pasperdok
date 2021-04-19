@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PatientController extends Controller
 {
@@ -49,7 +50,7 @@ class PatientController extends Controller
 
         $data = $request->validate(
             [
-                'nik'           => 'required|integer|min:8',
+                'nik'           => 'required|integer|min:8|unique:patients',
                 'nama'          => 'required|string|max:50',
                 'email'         => 'required|email|unique:users',
                 'password'      => 'required|confirmed',
@@ -91,10 +92,11 @@ class PatientController extends Controller
             ]
         );
 
-        $userAsPatient->patient->diseases()->syncWithoutDetaching($data['diseases'] ?? []);
+        $userAsPatient->patient->diseases()->sync($data['diseases'] ?? []);
 
         $userAsPatient->assignRole('patient');
         Auth::login($userAsPatient);
+        toast("Registrasi Berhasil!", 'success');
         return redirect('/');
     }
 
@@ -123,7 +125,14 @@ class PatientController extends Controller
      */
     public function edit(Patient $patient)
     {
-        //
+        $tanggalLahir = explode('-', $patient->tanggal_lahir);
+        $patient['thn'] = $tanggalLahir[0];
+        $patient['bln'] = $tanggalLahir[1];
+        $patient['tgl'] = $tanggalLahir[2];
+        $diseases = Disease::orderBy('nama_penyakit')->get();
+        $diseasesPatient = Disease::whereIn('id', $patient->diseases->pluck('id')->all())->get();
+        $diseasesTaken = $diseasesPatient->pluck('id')->toArray();
+        return view('patient.edit', compact('patient', 'diseases', 'diseasesTaken'));
     }
 
     /**
@@ -135,7 +144,58 @@ class PatientController extends Controller
      */
     public function update(Request $request, Patient $patient)
     {
-        //
+        $tanggalLahir = $request->thn
+            . str_pad($request->bln, 2, 0, STR_PAD_LEFT)
+            . str_pad($request->tgl, 2, 0, STR_PAD_LEFT);
+        $request['tanggal_lahir'] = $tanggalLahir;
+
+        $data = $request->validate(
+            [
+                'nik'           => 'required|integer|min:8|unique:patients,nik,' . $patient->id,
+                'nama'          => 'required|string|max:50',
+                'email'         => 'required|email|unique:users,email,' . $patient->user->id,
+                'tanggal_lahir' => 'required|date|before:-10 years|after:-100 years',
+                'alamat'        => 'required',
+                'jenis_kelamin' => 'required|in:L,P',
+                'handphone'     => 'required|max:13',
+                'photo'         => 'file|image|max:5000',
+                'diseases.*'    => 'distinct|in:' . implode(',', \App\Models\Disease::pluck('id')->all()),
+                'keluhan'       => 'required'
+            ]
+        );
+
+        if ($request->hasFile('photo')) {
+            $namaFile = Str::slug($request->nama) . '-' . time() . '.' . $request->photo->getClientOriginalExtension();
+            $request->photo->storeAs('public/uploads/image', $namaFile);
+        } else {
+            $namaFile = $patient->photo ?? 'default_profile.jpg';
+        }
+
+        User::where('id', $patient->user->id)->first()->update(
+            [
+                'nama'     => $request->nama,
+                'email'    => $request->email,
+            ]
+        );
+
+        $userAsPatient = User::find($patient->user->id);
+
+        $userAsPatient->patient()->update(
+            [
+                'nik'           => $request->nik,
+                'nama'          => $request->nama,
+                'alamat'        => $request->alamat,
+                'tanggal_lahir' => $request->tanggal_lahir,
+                'jenis_kelamin' => $request->jenis_kelamin,
+                'handphone'     => $request->handphone,
+                'photo'         => $namaFile,
+                'keluhan'       => $request->keluhan,
+            ]
+        );
+
+        $userAsPatient->patient->diseases()->sync($data['diseases'] ?? []);
+        Alert::success('Berhasil!', "Update data untuk pasien {$patient->nama} berhasil!");
+        return redirect()->route('patients.show', ['patient' => $patient->id]);
     }
 
     /**
