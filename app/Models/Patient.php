@@ -27,6 +27,6 @@ class Patient extends Model
 
     public function diseases()
     {
-        return $this->belongsToMany('\App\Models\Disease');
+        return $this->belongsToMany('\App\Models\Disease')->withTimestamps();
     }
 }

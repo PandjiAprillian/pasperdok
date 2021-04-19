@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title') {{ config('app.name', 'Laravel') }}</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -54,7 +54,6 @@
 
     <div id="preloader"></div>
     <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
-    @endif
 
     <!-- Vendor JS Files -->
     <script src="/vendor/patient/jquery/jquery.min.js"></script>
@@ -69,6 +68,8 @@
 
     <!-- Template Main JS File -->
     <script src="/js/main.js"></script>
+    @endif
+
 
 </body>
 

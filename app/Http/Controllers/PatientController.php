@@ -47,7 +47,7 @@ class PatientController extends Controller
             . str_pad($request->tgl, 2, 0, STR_PAD_LEFT);
         $request['tanggal_lahir'] = $tanggalLahir;
 
-        $request->validate(
+        $data = $request->validate(
             [
                 'nik'           => 'required|integer|min:8',
                 'nama'          => 'required|string|max:50',
@@ -57,7 +57,7 @@ class PatientController extends Controller
                 'alamat'        => 'required',
                 'jenis_kelamin' => 'required|in:L,P',
                 'handphone'     => 'required|max:13',
-                'photo'         => 'required|file|image|max:5000',
+                'photo'         => 'file|image|max:5000',
                 'diseases.*'    => 'distinct|in:' . implode(',', \App\Models\Disease::pluck('id')->all()),
                 'keluhan'       => 'required'
             ]
@@ -70,7 +70,7 @@ class PatientController extends Controller
             $namaFile = 'default_profile.jpg';
         }
 
-        $patient = User::create(
+        $userAsPatient = User::create(
             [
                 'nama'     => $request->nama,
                 'email'    => $request->email,
@@ -78,7 +78,7 @@ class PatientController extends Controller
             ]
         );
 
-        $patient->patient()->create(
+        $userAsPatient->patient()->create(
             [
                 'nik'           => $request->nik,
                 'nama'          => $request->nama,
@@ -91,8 +91,10 @@ class PatientController extends Controller
             ]
         );
 
-        $patient->assignRole('patient');
-        Auth::login($patient);
+        $userAsPatient->patient->diseases()->syncWithoutDetaching($data['diseases'] ?? []);
+
+        $userAsPatient->assignRole('patient');
+        Auth::login($userAsPatient);
         return redirect('/');
     }
 
@@ -104,7 +106,13 @@ class PatientController extends Controller
      */
     public function show(Patient $patient)
     {
-        //
+        $tanggalLahir = explode('-', $patient->tanggal_lahir);
+        $patient['thn'] = $tanggalLahir[0];
+        $patient['bln'] = $tanggalLahir[1];
+        $patient['tgl'] = $tanggalLahir[2];
+        $diseases = Disease::orderBy('nama_penyakit')->get();
+        $diseasesTaken = Disease::whereIn('id', $patient->diseases->pluck('id')->all())->get();
+        return view('patient.show', compact('patient', 'diseases', 'diseasesTaken'));
     }
 
     /**

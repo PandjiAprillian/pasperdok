@@ -1,6 +1,11 @@
+@php
+$months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober',
+'November', 'Desember'];
+@endphp
+
 @csrf
 
-@if ($button == 'Sign Up')
+@if (request()->is("register") || request()->is("patients/{$patient->id}/edit"))
 <div class="form-group row justify-content-center">
     <label for="nik" class="col-sm-6 col-form-label text-md-right">NIK</label>
     <div class="col-sm-6">
@@ -13,9 +18,6 @@
         @enderror
     </div>
 </div>
-@else
-<input type="hidden" class="form-control" name="nik" value="{{ $patient->nik }}">
-@endif
 
 <div class="form-group row">
     <label for="nama" class="col-sm-6 col-form-label text-md-right">Nama</label>
@@ -67,14 +69,10 @@
     <label for="tanggal_lahir" class="col-sm-6 col-form-label text-md-right">Tanggal Lahir</label>
     <div class="col-sm-6">
         <input type="number" name="tgl" id="tgl" class="form-control col-md-3 d-inline" placeholder="dd"
-            value="{{ old('tgl') ?? $user->tgl ?? '' }}">
-        @php
-        $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober',
-        'November', 'Desember'];
-        @endphp
+            value="{{ old('tgl') ?? $patient->tgl ?? '' }}">
         <select name="bln" id="bln" class="custom-select col-md-4 d-inline" style="vertical-align: baseline">
             @foreach ($months as $key => $month)
-            @if ($key + 1 == (old('bln') ?? $user->bln ?? ''))
+            @if ($key + 1 == (old('bln') ?? $patient->bln ?? ''))
             <option value="{{ $key + 1 }}" selected>{{ $month }}</option>
             @else
             <option value="{{ $key + 1 }}">{{ $month }}</option>
@@ -82,7 +80,7 @@
             @endforeach
         </select>
         <input type="number" name="thn" id="thn" class="form-control col-md-3 d-inline" placeholder="yyyy"
-            value="{{ old('thn') ?? $user->thn ?? '' }}">
+            value="{{ old('thn') ?? $patient->thn ?? '' }}">
         @error('tanggal_lahir')
         <small class="form-text text-danger"><strong>{{ $message }}</strong></small>
         @enderror
@@ -186,3 +184,53 @@
         </div>
     </div>
 </div>
+@elseif (request()->is("patients/{$patient->id}"))
+<div class="row mb-3">
+    <div class="col">
+        <label for="nik"><b>NIK</b></label>
+        <p class="form-control-plaintext text-muted">{{ $patient->nik }}</p>
+    </div>
+    <div class="col">
+        <label for="nama"><b>Nama</b></label>
+        <p class="form-control-plaintext text-muted">{{ $patient->nama }}</p>
+    </div>
+    <div class="col">
+        <label for="email"><b>Email</b></label>
+        <p class="form-control-plaintext text-muted">{{ $patient->user->email }}</p>
+    </div>
+</div>
+
+<div class="row my-4">
+    <div class="col">
+        <label for="Alamat"><b>Alamat</b></label>
+        <p class="form-control-plaintext text-muted">{{ $patient->alamat }}</p>
+    </div>
+    <div class="col">
+        <label for="tanggal_lahir"><b>Tanggal Lahir</b></label>
+        <p class="form-control-plaintext text-muted">{{ $patient->tgl }} - {{ $patient->bln }} - {{ $patient->thn }}</p>
+    </div>
+    <div class="col">
+        <label for="jenis_kelamin"><b>Jenis Kelamin</b></label>
+        <p class="form-control-plaintext text-muted">{{ ($patient->jenis_kelamin == 'L') ? 'Laki - Laki' : 'Perempuan' }}</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <label for="penyakit"><b>Menderita</b></label>
+        <ul class="list-group list-group-flush">
+            @foreach ($diseasesTaken as $disease)
+                <p class="form-control-plaintext text-muted"><i>{{ $disease->nama_penyakit }}</i></p>
+            @endforeach
+        </ul>
+    </div>
+    <div class="col">
+        <label for="handphone"><b>No.Handphone</b></label>
+        <p class="form-control-plaintext text-muted">{{ $patient->handphone }}</p>
+    </div>
+    <div class="col">
+        <label for="keluhan"><b>Keluhan</b></label>
+        <p class="form-control-plaintext text-muted">{{ $patient->keluhan }}</p>
+    </div>
+</div>
+@endif

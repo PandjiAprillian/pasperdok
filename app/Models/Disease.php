@@ -16,6 +16,6 @@ class Disease extends Model
 
     public function patients()
     {
-        return $this->belongsToMany('\App\Models\patient');
+        return $this->belongsToMany('\App\Models\patient')->withTimestamps();
     }
 }
