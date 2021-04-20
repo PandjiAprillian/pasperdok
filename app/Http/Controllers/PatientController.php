@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Disease;
 use App\Models\Patient;
+use App\Models\Room;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -31,7 +32,7 @@ class PatientController extends Controller
     public function create()
     {
         $diseases = Disease::orderBy('nama_penyakit')->get();
-        $diseasesTaken = (auth()->check()) ? auth()->user()->patient->diseases->pluck('id')->all() : [] ;
+        $diseasesTaken = (auth()->check()) ? auth()->user()->patient->diseases->pluck('id')->all() : [];
         return view('patient.register', compact('diseases', 'diseasesTaken'));
     }
 
@@ -112,9 +113,24 @@ class PatientController extends Controller
         $patient['thn'] = $tanggalLahir[0];
         $patient['bln'] = $tanggalLahir[1];
         $patient['tgl'] = $tanggalLahir[2];
+
         $diseases = Disease::orderBy('nama_penyakit')->get();
         $diseasesTaken = Disease::whereIn('id', $patient->diseases->pluck('id')->all())->get();
-        return view('patient.show', compact('patient', 'diseases', 'diseasesTaken'));
+        $rooms = Room::withCount('patients')->orderBy('nomor_kamar')->get();
+
+        if (Auth::user()->hasRole('doctor')) {
+            $doctorSpesialists = Disease::where('doctor_id', $diseasesTaken->pluck('doctor_id')->all())->get();
+            $spesialists = [];
+            for ($i=0; $i < count($doctorSpesialists); $i++) {
+                if (in_array($doctorSpesialists[$i]->nama_penyakit, $diseasesTaken->pluck('nama_penyakit')->all())) {
+                    array_push($spesialists, $doctorSpesialists[$i]->nama_penyakit);
+                }
+                continue;
+            }
+            return view('patient.show', compact('patient', 'diseases', 'diseasesTaken', 'spesialists', 'rooms'));
+        }
+
+        return view('patient.show', compact('patient', 'diseases', 'diseasesTaken', 'rooms'));
     }
 
     /**
@@ -207,5 +223,42 @@ class PatientController extends Controller
     public function destroy(Patient $patient)
     {
         //
+    }
+
+    public function perawatan(Request $request, Patient $patient)
+    {
+        $request->validate(
+            [
+                'rawat_inap' => 'in:1,2',
+                // 'room_id'    => 'exists:rooms,\App\Models\Room,id'
+            ]
+        );
+
+        $rooms = Room::withCount('patients')->orderBy('nomor_kamar')->get();
+        dd($rooms->toArray());
+        for ($i = 0; $i < count(Room::all()); $i++) {
+            if ($request->room_id == $rooms[$i]) {
+                if ($rooms[$i]->patients_count >= 2) {
+                    return back()->with('warning', "Kamar dengan nomor {$rooms[$i]->nomor_kamar} sudah terisi penuh!");
+                }
+            }
+        }
+
+        if ($request->rawat_inap == 1) {
+            Patient::where('id', $patient->id)->update(
+                [
+                    'rawat_inap' => $request->rawat_inap,
+                    'room_id' => $request->room_id
+                ]
+            );
+        } else {
+            Patient::where('id', $patient->id)->update(
+                [
+                    'rawat_inap' => $request->rawat_inap,
+                ]
+            );
+        }
+
+        return redirect('/doctors')->with('success', "Data rawat berhasil disimpan!");
     }
 }

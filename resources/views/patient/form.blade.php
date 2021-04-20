@@ -219,9 +219,15 @@ $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agus
     <div class="col">
         <label for="penyakit"><b>Menderita</b></label>
         <ul class="list-group list-group-flush">
-            @foreach ($diseasesTaken as $disease)
-                <p class="form-control-plaintext text-muted"><i>{{ $disease->nama_penyakit }}</i></p>
-            @endforeach
+            @if ((str_replace(url('/'), '', url()->previous()) == '/doctors'))
+                @foreach ($spesialists as $spesialistPenyakit)
+                <p class="form-control-plaintext text-muted"><i>{{ $spesialistPenyakit }}</i></p>
+                @endforeach
+            @else
+                @foreach ($diseasesTaken as $disease)
+                    <p class="form-control-plaintext text-muted"><i>{{ $disease->nama_penyakit }}</i></p>
+                @endforeach
+            @endif
         </ul>
     </div>
     <div class="col">
@@ -233,4 +239,25 @@ $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agus
         <p class="form-control-plaintext text-muted">{{ $patient->keluhan }}</p>
     </div>
 </div>
+
+@if (Auth::user()->hasRole('patient') || Auth::user()->hasRole('admin'))
+<div class="row mt-3 justify-content-between">
+    <div class="col">
+        <label for="rawat_inap"><b>Rawat Inap?</b></label>
+        @if ($patient->rawat_inap == 1)
+        <p class="form-control-plaintext text-muted">Anda harus menjalani rawat inap</p>
+        @elseif ($patient->rawat_inap == 2)
+        <p class="form-control-plaintext text-muted">Anda hanya rawat jalan</p>
+        @else
+        <p class="form-control-plaintext text-muted">Dokter belum memutuskan</p>
+        @endif
+    </div>
+    @if ($patient->rawat_inap == 1)
+    <div class="col offset-sm-2">
+        <label for="keluhan"><b>Anda Terdaftar di kamar</b></label>
+        <p class="form-control-plaintext text-muted">{{ $patient->room->nomor_kamar }}</p>
+    </div>
+    @endif
+</div>
+@endif
 @endif

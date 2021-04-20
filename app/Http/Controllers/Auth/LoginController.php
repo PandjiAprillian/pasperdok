@@ -50,7 +50,7 @@ class LoginController extends Controller
         } elseif ($user->hasRole('nurse')) {
             return redirect('/nurse');
         } elseif ($user->hasRole('doctor')) {
-            return redirect('/doctor');
+            return redirect()->route('doctors.index')->with('success', "Selamat datang dokter {$user->nama}");
         }
 
         return redirect('/home');

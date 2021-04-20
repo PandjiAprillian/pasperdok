@@ -9,6 +9,11 @@ class Room extends Model
 {
     use HasFactory;
 
+    public function getNomorKamarAttribute($value)
+    {
+        return strtoupper($value);
+    }
+
     public function patients()
     {
         return $this->hasMany('\App\Models\Patient');

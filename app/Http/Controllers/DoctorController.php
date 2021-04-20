@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Disease;
 use App\Models\Doctor;
+use App\Models\Patient;
+use App\Models\Room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class DoctorController extends Controller
 {
@@ -14,7 +19,9 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        //
+        $diseases = Disease::where('doctor_id', Auth::user()->doctor->id)->paginate(5);
+        $patients = $diseases[0]->patients;
+        return view('doctor.home', compact('patients', 'diseases'));
     }
 
     /**

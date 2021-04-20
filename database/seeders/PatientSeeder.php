@@ -44,7 +44,7 @@ class PatientSeeder extends Seeder
 
         $rafita->assignRole('patient');
 
-        for($i = 2; $i <= 15; $i++){
+        for($i = 2; $i <= 5; $i++){
             $nama = "{$faker->firstName} {$faker->lastName}";
 
             $user = \App\Models\User::create(

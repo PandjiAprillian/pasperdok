@@ -9,14 +9,14 @@
     </a>
 
     <!-- Divider -->
-    <hr class="sidebar-divider my-0">
+    {{-- <hr class="sidebar-divider my-0"> --}}
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item">
+    {{-- <li class="nav-item">
         <a class="nav-link" href="index.html">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
-    </li>
+    </li> --}}
 
     <!-- Divider -->
     <hr class="sidebar-divider">
@@ -27,13 +27,16 @@
     </div>
 
     <!-- Pasien -->
-    <li class="nav-item">
-        <a class="nav-link" href="index.html">
+    @if (Auth::user()->hasRole('doctor') || Auth::user()->hasRole('admin'))
+    <li class="nav-item {{ request()->is('doctors') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('doctors.index') }}">
             <i class="fas fa-fw fa-procedures"></i>
             <span>Data Pasien</span></a>
     </li>
+    @endif
 
     <!-- Nav Item - Perawat Collapse Menu -->
+    @if (Auth::user()->hasRole('nurse') || Auth::user()->hasRole('admin'))
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
             aria-controls="collapseTwo">
@@ -48,13 +51,22 @@
             </div>
         </div>
     </li>
+    @endif
 
-    <!-- Pasien -->
-    <li class="nav-item">
+    <!-- Dokter -->
+    @if (Auth::user()->hasRole('admin'))
+    <li class="nav-item {{ request()->is('doctors/' . Auth::user()->doctor->id) ? 'active' : '' }}">
         <a class="nav-link" href="index.html">
             <i class="fas fa-fw fa-user-md"></i>
             <span>Data Dokter</span></a>
     </li>
+    @elseif (Auth::user()->hasRole('doctor'))
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('doctors.show', ['doctor' => Auth::user()->doctor->id]) }}">
+            <i class="fas fa-fw fa-user-md"></i>
+            <span>Profile Dokter</span></a>
+    </li>
+    @endif
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

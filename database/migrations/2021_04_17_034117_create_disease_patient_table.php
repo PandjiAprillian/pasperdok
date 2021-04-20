@@ -18,6 +18,7 @@ class CreateDiseasePatientTable extends Migration
             $table->foreignId('patient_id')->constrained()->onDelete('cascade');
             $table->foreignId('disease_id')->constrained()->onDelete('cascade');
             $table->timestamps();
+            $table->unique(['patient_id', 'disease_id']);
         });
     }
 

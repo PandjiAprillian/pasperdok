@@ -17,7 +17,7 @@ class DiseasePatientSeeder extends Seeder
         $faker = \Faker\Factory::create('id_ID');
         $faker->seed(749);
 
-        for($i = 1; $i <= 50; $i++) {
+        for($i = 1; $i <= 15; $i++) {
             \App\Models\DiseasePatient::create(
                 [
                     'patient_id' => $faker->numberBetween(1, \App\Models\Patient::count()),

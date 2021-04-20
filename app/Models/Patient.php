@@ -12,7 +12,7 @@ class Patient extends Model
 
     protected $fillable = [
         'nik', 'nama', 'alamat', 'tanggal_lahir', 'jenis_kelamin', 'handphone',
-        'photo', 'keluhan'
+        'photo', 'keluhan', 'rawat_inap'
     ];
 
     public function user()
