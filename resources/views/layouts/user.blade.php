@@ -40,6 +40,9 @@
     @if (isset($page))
         @if ($page == 'register')
             @yield('content')
+
+            <script src="/vendor/patient/jquery/jquery.min.js"></script>
+            <script src="/js/script.js"></script>
         @endif
     @else
     <!-- ======= Top Bar && Header ======= -->
@@ -68,6 +71,7 @@
 
     <!-- Template Main JS File -->
     <script src="/js/main.js"></script>
+    <script src="/js/script.js"></script>
 
     {{-- SweetAlert --}}
     @include('sweetalert::alert')

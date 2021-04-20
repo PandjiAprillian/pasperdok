@@ -10,6 +10,10 @@ class Doctor extends Model
 {
     use HasFactory, HasRoles;
 
+    protected $fillable = [
+        'nid' , 'nama', 'alamat', 'jenis_kelamin', 'handphone', 'photo'
+    ];
+
     public function user()
     {
         return $this->belongsTo('\App\Models\User');

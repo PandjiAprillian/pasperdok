@@ -58,7 +58,7 @@ class PatientController extends Controller
                 'tanggal_lahir' => 'required|date|before:-10 years|after:-100 years',
                 'alamat'        => 'required',
                 'jenis_kelamin' => 'required|in:L,P',
-                'handphone'     => 'required|max:13',
+                'handphone'     => 'required|numeric',
                 'photo'         => 'file|image|max:5000',
                 'diseases.*'    => 'distinct|in:' . implode(',', \App\Models\Disease::pluck('id')->all()),
                 'keluhan'       => 'required'
@@ -173,7 +173,7 @@ class PatientController extends Controller
                 'tanggal_lahir' => 'required|date|before:-10 years|after:-100 years',
                 'alamat'        => 'required',
                 'jenis_kelamin' => 'required|in:L,P',
-                'handphone'     => 'required|max:13',
+                'handphone'     => 'required|numeric',
                 'photo'         => 'file|image|max:5000',
                 'diseases.*'    => 'distinct|in:' . implode(',', \App\Models\Disease::pluck('id')->all()),
                 'keluhan'       => 'required'

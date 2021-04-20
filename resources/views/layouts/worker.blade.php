@@ -62,10 +62,10 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
+            <footer class="sticky-footer bg-white mt-3">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>Copyright &copy; PasPerDok {{ date('Y') }}</span>
                     </div>
                 </div>
             </footer>
@@ -95,7 +95,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin-2.min.js"></script>
-    {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
+    <script src="/js/script.js"></script>
     @include('sweetalert::alert')
     @endif
 
