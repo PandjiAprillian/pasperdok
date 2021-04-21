@@ -48,9 +48,9 @@ class LoginController extends Controller
             toast("Selamat datang " . $user->nama, 'success');
             return redirect('/');
         } elseif ($user->hasRole('nurse')) {
-            return redirect('/nurse');
+            return redirect()->route('nurses.index')->withSuccess("Selamat datang {$user->nama}");
         } elseif ($user->hasRole('doctor')) {
-            return redirect()->route('doctors.index')->with('success', "Selamat datang dokter {$user->nama}");
+            return redirect()->route('doctors.index')->withSuccess("Selamat datang dokter {$user->nama}");
         }
 
         return redirect('/home');

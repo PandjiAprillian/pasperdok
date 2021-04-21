@@ -13,12 +13,18 @@
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->nama }}</span>
-                <img class="img-profile rounded-circle" src="{{ asset('storage/uploads/image/' . Auth::user()->doctor->photo) }}">
+                <img class="img-profile rounded-circle"
+                    src="{{ asset('storage/uploads/image/' . (Auth::user()->doctor->photo ?? Auth::user()->nurse->photo)) }}">
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a href="{{ route('patients.show', ['patient' => Auth::user()->doctor->id]) }}"
+                @if (Auth::user()->hasRole('doctor'))
+                <a href="{{ route('doctors.show', ['doctor' => Auth::user()->doctor->id]) }}"
                     class="dropdown-item px-3">Profile</a>
+                @elseif (Auth::user()->hasRole('nurse'))
+                <a href="{{ route('nurses.show', ['nurse' => Auth::user()->nurse->id]) }}"
+                    class="dropdown-item px-3">Profile</a>
+                @endif
                 <a class="dropdown-item px-3" href="{{ route('logout') }}" onclick="event.preventDefault();
                                  document.getElementById('logout-form').submit();">
                     Logout

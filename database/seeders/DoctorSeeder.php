@@ -31,7 +31,7 @@ class DoctorSeeder extends Seeder
         $safa->doctor()->create(
             [
                 'nid'           => '19182339',
-                'nama'          => 'Muhamad Syafa',
+                'nama'          => 'Dr. Muhamad Syafa',
                 'alamat'        => $faker->address,
                 'jenis_kelamin' => 'L',
                 'handphone'     => $faker->unique()->phoneNumber,

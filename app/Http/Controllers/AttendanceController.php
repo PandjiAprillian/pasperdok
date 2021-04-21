@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Nurse;
+use App\Models\Attendance;
 use Illuminate\Http\Request;
 
-class NurseController extends Controller
+class AttendanceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class NurseController extends Controller
      */
     public function index()
     {
-        return view('nurse.home');
+        //
     }
 
     /**
@@ -41,10 +41,10 @@ class NurseController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Nurse  $nurse
+     * @param  \App\Models\Attendance  $attendance
      * @return \Illuminate\Http\Response
      */
-    public function show(Nurse $nurse)
+    public function show(Attendance $attendance)
     {
         //
     }
@@ -52,10 +52,10 @@ class NurseController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Nurse  $nurse
+     * @param  \App\Models\Attendance  $attendance
      * @return \Illuminate\Http\Response
      */
-    public function edit(Nurse $nurse)
+    public function edit(Attendance $attendance)
     {
         //
     }
@@ -64,10 +64,10 @@ class NurseController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Nurse  $nurse
+     * @param  \App\Models\Attendance  $attendance
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Nurse $nurse)
+    public function update(Request $request, Attendance $attendance)
     {
         //
     }
@@ -75,10 +75,10 @@ class NurseController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Nurse  $nurse
+     * @param  \App\Models\Attendance  $attendance
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Nurse $nurse)
+    public function destroy(Attendance $attendance)
     {
         //
     }

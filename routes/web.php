@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\NurseController;
 use App\Http\Controllers\PatientController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -16,3 +17,5 @@ Route::patch('/patients/{patient}', [PatientController::class, 'update'])->name(
 Route::patch('/patients/{patient}/perawatan', [PatientController::class, 'perawatan'])->name('patients.perawatan');
 
 Route::resource('/doctors', DoctorController::class);
+
+Route::resource('/nurses', NurseController::class);
