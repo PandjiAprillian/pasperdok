@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Nurse;
+use App\Models\Patient;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class NurseController extends Controller
 {
@@ -14,7 +18,8 @@ class NurseController extends Controller
      */
     public function index()
     {
-        return view('nurse.home');
+        $patients = Patient::where('room_id', Auth::user()->nurse->room_id)->get();
+        return view('nurse.home', compact('patients'));
     }
 
     /**
@@ -46,7 +51,7 @@ class NurseController extends Controller
      */
     public function show(Nurse $nurse)
     {
-        //
+        return view('nurse.show', compact('nurse'));
     }
 
     /**
@@ -57,7 +62,7 @@ class NurseController extends Controller
      */
     public function edit(Nurse $nurse)
     {
-        //
+        return view('nurse.edit', compact('nurse'));
     }
 
     /**
@@ -69,7 +74,36 @@ class NurseController extends Controller
      */
     public function update(Request $request, Nurse $nurse)
     {
-        //
+        $data = $request->validate(
+            [
+                'nip'           => 'required|integer|min:8|unique:nurses,nip,' . $nurse->id,
+                'nama'          => 'required|string|max:50',
+                'email'         => 'required|email|unique:users,email,' . $nurse->user->id,
+                'alamat'        => 'required',
+                'jenis_kelamin' => 'required|in:L,P',
+                'handphone'     => 'required|integer',
+                'photo'         => 'file|image|max:5000',
+            ]
+        );
+
+        if ($request->hasFile('photo')) {
+            $namaFile = Str::slug($request->nama) . '-' . time() . '.' . $request->photo->getClientOriginalExtension();
+            $request->photo->storeAs('public/uploads/image', $namaFile);
+        } else {
+            $namaFile = $nurse->photo ?? 'default_profile.jpg';
+        }
+
+        $data['photo'] = $namaFile;
+
+        User::where('id', Auth::user()->id)->first()->update(
+            [
+                'email' => $request->email
+            ]
+        );
+
+        $nurse->update($data);
+
+        return redirect()->route('nurses.show', ['nurse' => $nurse->id])->with('success', 'Update data berhasil!');
     }
 
     /**

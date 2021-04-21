@@ -6,6 +6,7 @@ use App\Models\Disease;
 use App\Models\Doctor;
 use App\Models\Patient;
 use App\Models\Room;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -97,6 +98,12 @@ class DoctorController extends Controller
         }
 
         $data['photo'] = $namaFile;
+
+        User::where('id', Auth::user()->id)->first()->update(
+            [
+                'email' => $request->email
+            ]
+        );
 
         $doctor->update($data);
         return redirect()->route('doctors.show', ['doctor' => $doctor->id])->with('success', 'Update data berhasil!');
