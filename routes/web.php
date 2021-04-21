@@ -18,9 +18,10 @@ Route::patch('/patients/{patient}', [PatientController::class, 'update'])->name(
 Route::patch('/patients/{patient}/perawatan', [PatientController::class, 'perawatan'])->name('patients.perawatan');
 
 Route::resource('/doctors', DoctorController::class);
+Route::get('/doctors/{doctor}/rekap-jadwal', [DoctorController::class, 'rekapJadwal'])->name('rekap.jadwal.dokter');
 
 Route::resource('/nurses', NurseController::class);
-Route::get('/nurses/{nurse}/rekap-jadwal', [NurseController::class, 'rekapJadwal'])->name('rekap.jadwal');
+Route::get('/nurses/{nurse}/rekap-jadwal', [NurseController::class, 'rekapJadwal'])->name('rekap.jadwal.perawat');
 
 Route::resource('/attendances', AttendanceController::class);
 Route::post('/out-attendance', [AttendanceController::class, 'outAttendance'])->name('attendances.out');

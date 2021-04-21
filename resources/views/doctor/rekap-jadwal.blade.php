@@ -6,7 +6,7 @@
         <div class="col">
             <div class="card">
                 <div class="card-header">
-                    Rekapitulasi Jam Kerja {{ $nurse->nama }}
+                    Rekapitulasi Jam Kerja {{ $doctor->nama }}
                 </div>
                 <div class="card-body">
                     <table class="table table-striped table-hover">

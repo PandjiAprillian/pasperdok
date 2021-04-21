@@ -46,10 +46,12 @@ class AttendanceController extends Controller
         $waktu = $date->format('H:i:s');
 
         $userId = Auth::user()->hasRole('doctor') ? Auth::user()->doctor->id : Auth::user()->nurse->id;
+        $userModel = Auth::user()->hasRole('doctor') ? 'App\Models\Doctor' : 'App\Models\Nurse';
 
         $attendance = Attendance::where(
             [
                 ['attendanceable_id', $userId],
+                ['attendanceable_type', $userModel],
                 ['tanggal', $tanggal]
             ]
         )->first();
@@ -61,16 +63,21 @@ class AttendanceController extends Controller
                 $doctor = Doctor::where('id', $userId)->first();
                 $doctor->attendances()->createMany(
                     [
-                        'tanggal' => $tanggal,
-                        'jam_masuk' => $waktu
+                        [
+                            'tanggal' => $tanggal,
+                            'jam_masuk' => $waktu
+                        ]
                     ]
                 );
+
                 $attendance = Attendance::where(
                     [
                         ['attendanceable_id', $userId],
+                        ['attendanceable_type', 'App\Models\Doctor'],
                         ['tanggal', $tanggal]
                     ]
                 )->first();
+
                 return back()->withSuccess("Anda sudah melakukan absensi pada pukul {$attendance->jam_masuk}");
             } elseif (Auth::user()->hasRole('nurse')) {
                 $nurse = Nurse::where('id', $userId)->first();
@@ -82,12 +89,15 @@ class AttendanceController extends Controller
                         ],
                     ]
                 );
+
                 $attendance = Attendance::where(
                     [
                         ['attendanceable_id', $userId],
+                        ['attendanceable_type', 'App\Models\Nurse'],
                         ['tanggal', $tanggal]
                     ]
                 )->first();
+
                 return back()->withSuccess("Anda sudah melakukan absensi pada pukul {$attendance->jam_masuk}");
             }
         }
@@ -100,10 +110,12 @@ class AttendanceController extends Controller
         $waktu = $date->format('H:i:s');
 
         $userId = Auth::user()->hasRole('doctor') ? Auth::user()->doctor->id : Auth::user()->nurse->id;
+        $userModel = Auth::user()->hasRole('doctor') ? 'App\Models\Doctor' : 'App\Models\Nurse';
 
         $attendance = Attendance::where(
             [
                 ['attendanceable_id', $userId],
+                ['attendanceable_type', $userModel],
                 ['tanggal', $tanggal]
             ]
         )->first();

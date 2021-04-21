@@ -24,9 +24,11 @@ class NurseController extends Controller
         $attendances = Attendance::where('attendanceable_id', Auth::user()->nurse->id)->get();
 
         if (count($attendances) > 0) {
-            for ($i=0; $i < count($attendances); $i++) {
-                if ($attendances[$i]->tanggal == date('Y-m-d', time())) {
+            for ($i = 0; $i < count($attendances); $i++) {
+                if (($attendances[$i]->tanggal == date('Y-m-d', time())) && ($attendances[$i]->attendanceable_type == 'App\Models\Nurse')) {
                     $attendanceDate = $attendances[$i]->tanggal;
+                } else {
+                    $attendanceDate = null;
                 }
             }
         } else {
@@ -133,7 +135,12 @@ class NurseController extends Controller
 
     public function rekapJadwal(Nurse $nurse)
     {
-        $attendances = Attendance::where('attendanceable_id', $nurse->id)->get();
+        $attendances = Attendance::where(
+            [
+                ['attendanceable_id', $nurse->id],
+                ['attendanceable_type', 'App\Models\Nurse'],
+            ]
+        )->paginate(5);
         return view('nurse.rekap-jadwal', compact('nurse', 'attendances'));
     }
 }

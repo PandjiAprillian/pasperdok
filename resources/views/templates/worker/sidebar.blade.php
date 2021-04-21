@@ -22,26 +22,42 @@
     <hr class="sidebar-divider">
 
     <!-- Heading -->
-    <div class="sidebar-heading">
+    {{-- <div class="sidebar-heading">
         Data
-    </div>
+    </div> --}}
 
     <!-- Pasien -->
     @if (Auth::user()->hasRole('doctor') || Auth::user()->hasRole('admin'))
-    <li class="nav-item {{ request()->is('doctors') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('doctors.index') }}">
+    <li
+        class="nav-item {{ (request()->is('doctors') || request()->is('doctors/' . Auth::user()->doctor->id . '/rekap-jadwal')) ? 'active' : '' }}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+            aria-controls="collapseTwo">
             <i class="fas fa-fw fa-procedures"></i>
-            <span>Data Pasien</span></a>
+            <span>Data</span>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Menu</h6>
+                <a class="collapse-item" href="{{ route('doctors.index') }}">
+                    {!! request()->is('doctors') ? '<b>Dashboard</b>' : 'Dashboard' !!}
+                </a>
+                <a class="collapse-item" href="{{ route('rekap.jadwal.dokter', ['doctor' => Auth::user()->doctor->id]) }}">
+                    {!! request()->is("doctors/" . Auth::user()->doctor->id . "/rekap-jadwal") ? '<b>Rekap Jam Kerja</b>'
+                    : 'Rekap Jam Kerja' !!}
+                </a>
+            </div>
+        </div>
     </li>
     @endif
 
     <!-- Nav Item - Perawat Collapse Menu -->
     @if (Auth::user()->hasRole('nurse') || Auth::user()->hasRole('admin'))
-    <li class="nav-item {{ request()->is('nurses') ? 'active' : '' }}">
+    <li
+        class="nav-item {{ (request()->is('nurses') || request()->is('nurses/' . Auth::user()->nurse->id . '/rekap-jadwal')) ? 'active' : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
             aria-controls="collapseTwo">
             <i class="fas fa-fw fa-user-nurse"></i>
-            <span>Perawat</span>
+            <span>Data</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
@@ -49,8 +65,9 @@
                 <a class="collapse-item" href="{{ route('nurses.index') }}">
                     {!! request()->is('nurses') ? '<b>Dashboard</b>' : 'Dashboard' !!}
                 </a>
-                <a class="collapse-item" href="{{ route('rekap.jadwal', ['nurse' => Auth::user()->nurse->id]) }}">
-                    {!! request()->is("nurses/" . Auth::user()->nurse->id . "/rekap-jadwal") ? '<b>Rekap Jam Kerja</b>' : 'Rekap Jam Kerja' !!}
+                <a class="collapse-item" href="{{ route('rekap.jadwal.perawat', ['nurse' => Auth::user()->nurse->id]) }}">
+                    {!! request()->is("nurses/" . Auth::user()->nurse->id . "/rekap-jadwal") ? '<b>Rekap Jam Kerja</b>'
+                    : 'Rekap Jam Kerja' !!}
                 </a>
             </div>
         </div>

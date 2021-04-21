@@ -13,6 +13,27 @@
     <div class="row">
         <div class="col">
             <div class="card">
+                <div class="card-header">
+                    <div class="row justify-content-between align-items-center px-3">
+                        oke
+                        @if ($attendanceDate)
+                        <form action="{{ route('attendances.out') }}" method="post">
+                            @csrf
+                            <button id="btn-keluar" type="submit" class="btn btn-success">
+                                Absen Keluar
+                            </button>
+                        </form>
+                        @else
+                        <form action="{{ route('attendances.store') }}" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-primary">
+                                Absen masuk
+                            </button>
+                        </form>
+                        @endif
+                    </div>
+                </div>
+
                 <div class="card-body">
                     <table class="table table-striped table-hover">
                         <thead>

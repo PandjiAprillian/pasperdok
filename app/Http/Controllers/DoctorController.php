@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attendance;
 use App\Models\Disease;
 use App\Models\Doctor;
 use App\Models\Patient;
@@ -23,7 +24,21 @@ class DoctorController extends Controller
     {
         $diseases = Disease::where('doctor_id', Auth::user()->doctor->id)->paginate(5);
         $patients = $diseases[0]->patients;
-        return view('doctor.home', compact('patients', 'diseases'));
+
+        $attendances = Attendance::where('attendanceable_id', Auth::user()->doctor->id)->get();
+        if (count($attendances) > 0) {
+            for ($i = 0; $i < count($attendances); $i++) {
+                if (($attendances[$i]->tanggal == date('Y-m-d', time())) && ($attendances[$i]->attendanceable_type == 'App\Models\Doctor')) {
+                    $attendanceDate = $attendances[$i]->tanggal;
+                } else {
+                    $attendanceDate = null;
+                }
+            }
+        } else {
+            $attendanceDate = null;
+        }
+
+        return view('doctor.home', compact('patients', 'diseases', 'attendanceDate'));
     }
 
     /**
@@ -118,5 +133,16 @@ class DoctorController extends Controller
     public function destroy(Doctor $doctor)
     {
         //
+    }
+
+    public function rekapJadwal(Doctor $doctor)
+    {
+        $attendances = Attendance::where(
+            [
+                ['attendanceable_id', $doctor->id],
+                ['attendanceable_type', 'App\Models\Doctor'],
+            ]
+        )->paginate(5);
+        return view('doctor.rekap-jadwal', compact('doctor', 'attendances'));
     }
 }
