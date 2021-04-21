@@ -49,7 +49,9 @@
                 <a class="collapse-item" href="{{ route('nurses.index') }}">
                     {!! request()->is('nurses') ? '<b>Dashboard</b>' : 'Dashboard' !!}
                 </a>
-                <a class="collapse-item" href="cards.html">Lihat Jadwal</a>
+                <a class="collapse-item" href="{{ route('rekap.jadwal', ['nurse' => Auth::user()->nurse->id]) }}">
+                    {!! request()->is("nurses/" . Auth::user()->nurse->id . "/rekap-jadwal") ? '<b>Rekap Jam Kerja</b>' : 'Rekap Jam Kerja' !!}
+                </a>
             </div>
         </div>
     </li>

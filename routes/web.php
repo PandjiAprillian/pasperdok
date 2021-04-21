@@ -20,6 +20,7 @@ Route::patch('/patients/{patient}/perawatan', [PatientController::class, 'perawa
 Route::resource('/doctors', DoctorController::class);
 
 Route::resource('/nurses', NurseController::class);
+Route::get('/nurses/{nurse}/rekap-jadwal', [NurseController::class, 'rekapJadwal'])->name('rekap.jadwal');
 
 Route::resource('/attendances', AttendanceController::class);
 Route::post('/out-attendance', [AttendanceController::class, 'outAttendance'])->name('attendances.out');

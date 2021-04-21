@@ -130,4 +130,10 @@ class NurseController extends Controller
     {
         //
     }
+
+    public function rekapJadwal(Nurse $nurse)
+    {
+        $attendances = Attendance::where('attendanceable_id', $nurse->id)->get();
+        return view('nurse.rekap-jadwal', compact('nurse', 'attendances'));
+    }
 }
