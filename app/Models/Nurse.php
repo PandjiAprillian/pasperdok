@@ -23,4 +23,9 @@ class Nurse extends Model
     {
         return $this->belongsTo('\App\Models\Room');
     }
+
+    public function attendances()
+    {
+        return $this->morphMany('\App\Models\Attendance', 'attendanceable');
+    }
 }

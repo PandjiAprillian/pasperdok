@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\NurseController;
 use App\Http\Controllers\PatientController;
@@ -19,3 +20,6 @@ Route::patch('/patients/{patient}/perawatan', [PatientController::class, 'perawa
 Route::resource('/doctors', DoctorController::class);
 
 Route::resource('/nurses', NurseController::class);
+
+Route::resource('/attendances', AttendanceController::class);
+Route::post('/out-attendance', [AttendanceController::class, 'outAttendance'])->name('attendances.out');

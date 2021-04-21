@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attendance;
 use App\Models\Nurse;
 use App\Models\Patient;
 use App\Models\User;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -19,7 +21,19 @@ class NurseController extends Controller
     public function index()
     {
         $patients = Patient::where('room_id', Auth::user()->nurse->room_id)->get();
-        return view('nurse.home', compact('patients'));
+        $attendances = Attendance::where('attendanceable_id', Auth::user()->nurse->id)->get();
+
+        if (count($attendances) > 0) {
+            for ($i=0; $i < count($attendances); $i++) {
+                if ($attendances[$i]->tanggal == date('Y-m-d', time())) {
+                    $attendanceDate = $attendances[$i]->tanggal;
+                }
+            }
+        } else {
+            $attendanceDate = null;
+        }
+
+        return view('nurse.home', compact('patients', 'attendanceDate'));
     }
 
     /**

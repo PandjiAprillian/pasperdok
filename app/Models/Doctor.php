@@ -23,4 +23,9 @@ class Doctor extends Model
     {
         return $this->hasMany('\App\Models\Disease');
     }
+
+    public function attendances()
+    {
+        return $this->morphMany('\App\Models\Attendance', 'attendanceable');
+    }
 }
