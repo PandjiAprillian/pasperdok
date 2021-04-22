@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\NurseController;
@@ -25,3 +26,9 @@ Route::get('/nurses/{nurse}/rekap-jadwal', [NurseController::class, 'rekapJadwal
 
 Route::resource('/attendances', AttendanceController::class);
 Route::post('/out-attendance', [AttendanceController::class, 'outAttendance'])->name('attendances.out');
+
+Route::get('/admins/data-pasien', [AdminController::class, 'dataPasien'])->name('admins.data.patient');
+Route::get('/admins/data-pasien/{patient}', [AdminController::class, 'showDataPasien'])->name('admins.show.patient');
+Route::get('/admins/data-pasien/{patient}/edit', [AdminController::class, 'editDataPasien'])->name('admins.edit.patient');
+Route::delete('/admins/{patient}', [AdminController::class, 'destroyDataPasien'])->name('admins.destroy.patient');
+Route::resource('/admins', AdminController::class);

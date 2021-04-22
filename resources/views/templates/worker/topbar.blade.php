@@ -14,7 +14,7 @@
                 aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->nama }}</span>
                 <img class="img-profile rounded-circle"
-                    src="{{ asset('storage/uploads/image/' . (Auth::user()->doctor->photo ?? Auth::user()->nurse->photo)) }}">
+                    src="{{ asset('storage/uploads/image/' . (Auth::user()->doctor->photo ?? Auth::user()->nurse->photo ?? Auth::user()->admin->photo)) }}">
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -23,6 +23,9 @@
                     class="dropdown-item px-3">Profile</a>
                 @elseif (Auth::user()->hasRole('nurse'))
                 <a href="{{ route('nurses.show', ['nurse' => Auth::user()->nurse->id]) }}"
+                    class="dropdown-item px-3">Profile</a>
+                @elseif (Auth::user()->hasRole('admin'))
+                <a href="{{ route('admins.show', ['admin' => Auth::user()->admin->id]) }}"
                     class="dropdown-item px-3">Profile</a>
                 @endif
                 <a class="dropdown-item px-3" href="{{ route('logout') }}" onclick="event.preventDefault();

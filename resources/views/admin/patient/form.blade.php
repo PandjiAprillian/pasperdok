@@ -5,7 +5,7 @@ $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agus
 
 @csrf
 
-@if (request()->is("register") || request()->is("patients/{$patient->id}/edit") || request()->is("admins/data-pasien/{$patient->id}/edit"))
+@if (request()->is("register") || request()->is("patients/{$patient->id}/edit"))
 <div class="form-group row justify-content-center">
     <label for="nik" class="col-sm-6 col-form-label text-md-right">NIK</label>
     <div class="col-sm-6">
@@ -177,7 +177,7 @@ $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agus
     </div>
 </div>
 
-@if (request()->is("admins/data-pasien/{$patient->id}/edit"))
+@if (isset($_GET['admin']))
     <input type="hidden" name="admin" value="1">
 @endif
 
@@ -188,7 +188,7 @@ $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agus
         </div>
     </div>
 </div>
-@elseif (request()->is("patients/{$patient->id}") || request()->is("admins/data-pasien/{$patient->id}"))
+@elseif (request()->is("patients/{$patient->id}"))
 <div class="row mb-3">
     <div class="col">
         <label for="nik"><b>NIK</b></label>

@@ -22,8 +22,9 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        $diseases = Disease::where('doctor_id', Auth::user()->doctor->id)->paginate(5);
-        $patients = $diseases[0]->patients;
+        $patients = Patient::whereHas('diseases', function ($query) {
+            $query->where('doctor_id', Auth::user()->doctor->id);
+        })->paginate(5);
 
         $attendances = Attendance::where('attendanceable_id', Auth::user()->doctor->id)->get();
         if (count($attendances) > 0) {
@@ -38,7 +39,7 @@ class DoctorController extends Controller
             $attendanceDate = null;
         }
 
-        return view('doctor.home', compact('patients', 'diseases', 'attendanceDate'));
+        return view('doctor.home', compact('patients', 'attendanceDate'));
     }
 
     /**

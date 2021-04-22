@@ -43,8 +43,11 @@
                             </thead>
                             <tbody>
                                 @forelse ($patients as $patient)
+                                    @if ($patient == null)
+                                        @continue
+                                    @endif
                                     <tr>
-                                        <td>{{ $patients->firstItem() + $loop->iteration - 1}}</td>
+                                        <td>{{ $patients->firstItem() + $loop->iteration - 1 }}</td>
                                         <td>{{ $patient->nama }}</td>
                                         <td>{{ \Carbon\Carbon::parse($patient->tanggal_lahir)->age }} Tahun</td>
                                         <td>{{ ($patient->jenis_kelamin == 'L') ? 'Laki - Laki' : 'Perempuan' }}</td>
@@ -68,7 +71,7 @@
 
     <div class="row mt-5">
         <div class="mx-auto">
-            {{ $diseases->links() }}
+            {{ $patients->links() }}
         </div>
     </div>
 </div>

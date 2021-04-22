@@ -43,7 +43,7 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         if ($user->hasRole('admin')) {
-            return redirect('/admin');
+            return redirect()->route('admins.index')->withSuccess("Selamat datang admin {$user->nama}");
         } elseif ($user->hasRole('patient')) {
             toast("Selamat datang " . $user->nama, 'success');
             return redirect('/');

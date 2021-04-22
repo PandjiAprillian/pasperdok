@@ -27,7 +27,7 @@
     </div> --}}
 
     <!-- Pasien -->
-    @if (Auth::user()->hasRole('doctor') || Auth::user()->hasRole('admin'))
+    @if (Auth::user()->hasRole('doctor'))
     <li
         class="nav-item {{ (request()->is('doctors') || request()->is('doctors/' . Auth::user()->doctor->id . '/rekap-jadwal')) ? 'active' : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
@@ -48,10 +48,15 @@
             </div>
         </div>
     </li>
+    <li class="nav-item {{ request()->is('doctors/' . Auth::user()->doctor->id) ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('doctors.show', ['doctor' => Auth::user()->doctor->id]) }}">
+            <i class="fas fa-fw fa-user-md"></i>
+            <span>Profile Dokter</span></a>
+    </li>
     @endif
 
     <!-- Nav Item - Perawat Collapse Menu -->
-    @if (Auth::user()->hasRole('nurse') || Auth::user()->hasRole('admin'))
+    @if (Auth::user()->hasRole('nurse'))
     <li
         class="nav-item {{ (request()->is('nurses') || request()->is('nurses/' . Auth::user()->nurse->id . '/rekap-jadwal')) ? 'active' : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
@@ -81,16 +86,45 @@
 
     <!-- Dokter -->
     @if (Auth::user()->hasRole('admin'))
-    <li class="nav-item {{ request()->is('doctors/' . Auth::user()->doctor->id) ? 'active' : '' }}">
-        <a class="nav-link" href="index.html">
-            <i class="fas fa-fw fa-user-md"></i>
-            <span>Data Dokter</span></a>
+    <li
+        class="nav-item
+        {{ (request()->is('admins') || request()->is('admins/data-pasien')) ? 'active' : '' }}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+            aria-controls="collapseTwo">
+            <i class="fas fa-users-cog"></i>
+            <span>Data</span>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Menu</h6>
+                <a class="collapse-item" href="{{ route('admins.index') }}">
+                    {!! request()->is('admins') ? '<b>Dashboard</b>' : 'Dashboard' !!}
+                </a>
+                <a class="collapse-item" href="{{ route('admins.data.patient') }}">
+                    {!! request()->is('admins/data-pasien') ? '<b>Data Pasien</b>' : 'Data Pasien' !!}
+                </a>
+                <a class="collapse-item" href="#">
+                    Data Perawat
+                </a>
+                <a class="collapse-item" href="#">
+                    Data Dokter
+                </a>
+                <a class="collapse-item" href="#">
+                    Data Penyakit
+                </a>
+                <a class="collapse-item" href="#">
+                    Data Kamar
+                </a>
+                <a class="collapse-item" href="#">
+                    Rekapitulasi Jadwal
+                </a>
+            </div>
+        </div>
     </li>
-    @elseif (Auth::user()->hasRole('doctor'))
-    <li class="nav-item {{ request()->is('doctors/' . Auth::user()->doctor->id) ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('doctors.show', ['doctor' => Auth::user()->doctor->id]) }}">
-            <i class="fas fa-fw fa-user-md"></i>
-            <span>Profile Dokter</span></a>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('admins.show', ['admin' => Auth::user()->admin->id]) }}">
+            <i class="fas fa-user-shield"></i>
+            <span>Profile Admin</span></a>
     </li>
     @endif
 

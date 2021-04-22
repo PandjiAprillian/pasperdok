@@ -211,6 +211,9 @@ class PatientController extends Controller
 
         $userAsPatient->patient->diseases()->sync($data['diseases'] ?? []);
         Alert::success('Berhasil!', "Update data untuk pasien {$patient->nama} berhasil!");
+        if ($request->admin) {
+            return redirect()->route('admins.show.patient', ['patient' => $patient->id]);
+        }
         return redirect()->route('patients.show', ['patient' => $patient->id]);
     }
 

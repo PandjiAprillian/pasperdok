@@ -1,10 +1,14 @@
-@extends( (str_replace(url('/'), '', url()->previous()) == '/doctors') ? 'layouts.worker' : 'layouts.user')
+@extends(
+(str_replace(url('/'), '', url()->previous()) == '/doctors')
+    ? 'layouts.worker'
+    : 'layouts.user'
+)
 
 @section('title', 'Edit Profile')
 
 @section('content')
 <div class="container"
-    style="{{ str_replace(url('/'), '', url()->previous()) == '/doctors' ? 'margin-bottom: 50px' : 'margin-top: 180px' }}">
+    style="{{ (str_replace(url('/'), '', url()->previous()) == '/doctors') ? 'margin-bottom: 50px' : 'margin-top: 180px' }}">
     <div class="row">
 
         <div class="col-12">

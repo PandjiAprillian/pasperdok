@@ -1,5 +1,26 @@
-let button = document.getElementById('btn-keluar');
-button.addEventListener('click', confirmation);
+let btnHapus = document.getElementById('btn-hapus');
+btnHapus.addEventListener('click', deleteConfirmation);
+
+function deleteConfirmation(event) {
+    event.preventDefault();
+    Swal.fire({
+        title: 'Annda yakin?',
+        text: 'Hapus data pasien ' + event.target.getAttribute('data-name'),
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonColor: '#6c757d',
+        confirmButtonColor: '#dc3545',
+        confirmButtonText: 'Ya, hapus!',
+        reverseButtons: true,
+    }).then((result) => {
+        if (result.value) {
+            event.target.parentElement.submit();
+        }
+    })
+};
+
+let btnKeluar = document.getElementById('btn-keluar');
+btnKeluar.addEventListener('click', confirmation);
 
 function confirmation(event) {
     event.preventDefault();
