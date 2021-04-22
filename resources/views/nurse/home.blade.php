@@ -28,39 +28,41 @@
                 <div class="card-body">
                     <h6 class="card-text">Data pasien yang ada di kamar {{ Auth::user()->nurse->room->nomor_kamar }}
                     </h6>
-                    <table class="table table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Nama</th>
-                                <th>Umur</th>
-                                <th>Jenis kelamin</th>
-                                <th>Keluhan</th>
-                                <th>Detail</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($patients as $patient)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $patient->nama }}</td>
-                                <td>{{ \Carbon\Carbon::parse($patient->tanggal_lahir)->age }}</td>
-                                <td>
-                                    {{ $patient->jenis_kelamin == 'L' ? 'Laki - Laki' : 'Perempuan' }}
-                                </td>
-                                <td>{{ $patient->keluhan }}</td>
-                                <td>
-                                    <a href="{{ route('patients.show', ['patient' => $patient->id]) }}"
-                                        class="btn btn-sm btn-warning">Detail Pasien</a>
-                                </td>
-                            </tr>
-                            @empty
-                            <tr class="text-center">
-                                <td colspan="7">Ruangan kosong</td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                    <div class="table-responsive-sm">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nama</th>
+                                    <th>Umur</th>
+                                    <th>Jenis kelamin</th>
+                                    <th>Keluhan</th>
+                                    <th>Detail</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($patients as $patient)
+                                <tr>
+                                    <td>{{ $patients->firstItem() + $loop->iteration - 1 }}</td>
+                                    <td>{{ $patient->nama }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($patient->tanggal_lahir)->age }}</td>
+                                    <td>
+                                        {{ $patient->jenis_kelamin == 'L' ? 'Laki - Laki' : 'Perempuan' }}
+                                    </td>
+                                    <td>{{ $patient->keluhan }}</td>
+                                    <td>
+                                        <a href="{{ route('patients.show', ['patient' => $patient->id]) }}"
+                                            class="btn btn-sm btn-warning">Detail Pasien</a>
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr class="text-center">
+                                    <td colspan="7">Ruangan kosong</td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
