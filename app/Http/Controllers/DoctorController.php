@@ -8,6 +8,8 @@ use App\Models\Doctor;
 use App\Models\Patient;
 use App\Models\Room;
 use App\Models\User;
+use DateTime;
+use DateTimeZone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -22,14 +24,23 @@ class DoctorController extends Controller
      */
     public function index()
     {
+        $date = new DateTime('now', new DateTimeZone('Asia/Jakarta'));
+        $dateNow = $date->format('Y-m-d');
+
         $patients = Patient::whereHas('diseases', function ($query) {
             $query->where('doctor_id', Auth::user()->doctor->id);
         })->paginate(5);
 
-        $attendances = Attendance::where('attendanceable_id', Auth::user()->doctor->id)->get();
+        $attendances = Attendance::where(
+            [
+                ['attendanceable_id', Auth::user()->doctor->id],
+                ['attendanceable_type', 'App\Models\Doctor'],
+            ]
+        )->get();
+
         if (count($attendances) > 0) {
             for ($i = 0; $i < count($attendances); $i++) {
-                if (($attendances[$i]->tanggal == date('Y-m-d', time())) && ($attendances[$i]->attendanceable_type == 'App\Models\Doctor')) {
+                if ($attendances[$i]->tanggal == $dateNow) {
                     $attendanceDate = $attendances[$i]->tanggal;
                 } else {
                     $attendanceDate = null;

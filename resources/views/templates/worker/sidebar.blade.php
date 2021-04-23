@@ -88,7 +88,11 @@
     @if (Auth::user()->hasRole('admin'))
     <li
         class="nav-item
-        {{ (request()->is('admins') || request()->is('admins/data-pasien')) ? 'active' : '' }}">
+        {{ (request()->is('admins') ||
+            request()->is('admins/data-pasien') ||
+            request()->is('admins/data-perawat'))
+            ? 'active'
+            : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
             aria-controls="collapseTwo">
             <i class="fas fa-users-cog"></i>
@@ -103,8 +107,8 @@
                 <a class="collapse-item" href="{{ route('admins.data.patient') }}">
                     {!! request()->is('admins/data-pasien') ? '<b>Data Pasien</b>' : 'Data Pasien' !!}
                 </a>
-                <a class="collapse-item" href="#">
-                    Data Perawat
+                <a class="collapse-item" href="{{ route('admins.data.nurse') }}">
+                    {!! request()->is('admins/data-perawat') ? '<b>Data Perawat</b>' : 'Data Perawat' !!}
                 </a>
                 <a class="collapse-item" href="#">
                     Data Dokter

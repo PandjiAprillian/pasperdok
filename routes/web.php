@@ -31,4 +31,5 @@ Route::get('/admins/data-pasien', [AdminController::class, 'dataPasien'])->name(
 Route::get('/admins/data-pasien/{patient}', [AdminController::class, 'showDataPasien'])->name('admins.show.patient');
 Route::get('/admins/data-pasien/{patient}/edit', [AdminController::class, 'editDataPasien'])->name('admins.edit.patient');
 Route::delete('/admins/{patient}', [AdminController::class, 'destroyDataPasien'])->name('admins.destroy.patient');
+Route::get('/admins/data-perawat', [AdminController::class, 'dataPerawat'])->name('admins.data.nurse');
 Route::resource('/admins', AdminController::class);

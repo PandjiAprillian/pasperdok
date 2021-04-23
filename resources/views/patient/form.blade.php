@@ -70,7 +70,7 @@ $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agus
     <div class="col-sm-6">
         <input type="number" name="tgl" id="tgl" class="form-control col-md-3 d-inline" placeholder="dd"
             value="{{ old('tgl') ?? $patient->tgl ?? '' }}">
-        <select name="bln" id="bln" class="custom-select col-md-4 d-inline" style="vertical-align: baseline">
+        <select name="bln" id="bln" class="custom-select col-md-5 d-inline" style="vertical-align: baseline">
             @foreach ($months as $key => $month)
             @if ($key + 1 == (old('bln') ?? $patient->bln ?? ''))
             <option value="{{ $key + 1 }}" selected>{{ $month }}</option>

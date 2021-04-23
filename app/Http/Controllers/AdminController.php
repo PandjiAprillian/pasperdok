@@ -96,7 +96,7 @@ class AdminController extends Controller
     public function dataPasien()
     {
         $patients = Patient::orderBy('nama')->paginate(10);
-        return view('admin.data-pasien', compact('patients'));
+        return view('admin.patient.data-pasien', compact('patients'));
     }
 
     public function showDataPasien(Patient $patient)
@@ -137,5 +137,11 @@ class AdminController extends Controller
     {
         $patient->delete();
         return redirect()->route('admins.data.patient')->withSuccess("Pasien {$patient->nama} berhasil dihapus!");
+    }
+
+    public function dataPerawat()
+    {
+        $nurses = Nurse::paginate(5);
+        return view('admin.nurse.data-perawat', compact('nurses'));
     }
 }

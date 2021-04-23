@@ -18,6 +18,7 @@ class CreateDoctorsTable extends Migration
             $table->char('nid', 8)->unique();
             $table->string('nama');
             $table->text('alamat');
+            $table->date('tanggal_lahir');
             $table->char('jenis_kelamin', 1);
             $table->string('handphone', 30);
             $table->string('photo')->default('default_profile.jpg');

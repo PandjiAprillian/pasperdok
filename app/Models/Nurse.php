@@ -11,7 +11,7 @@ class Nurse extends Model
     use HasFactory, HasRoles;
 
     protected $fillable = [
-        'nip', 'nama', 'alamat', 'jenis_kelamin', 'handphone', 'photo'
+        'nip', 'nama', 'alamat', 'tanggal_lahir', 'jenis_kelamin', 'handphone', 'photo', 'room_id'
     ];
 
     public function user()

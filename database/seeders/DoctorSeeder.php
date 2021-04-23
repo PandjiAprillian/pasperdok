@@ -33,6 +33,7 @@ class DoctorSeeder extends Seeder
                 'nid'           => '19182339',
                 'nama'          => 'Dr. Muhamad Syafa',
                 'alamat'        => $faker->address,
+                'tanggal_lahir' => $faker->dateTimeBetween('-50 years', 'now'),
                 'jenis_kelamin' => 'L',
                 'handphone'     => $faker->unique()->phoneNumber,
             ]
@@ -58,6 +59,7 @@ class DoctorSeeder extends Seeder
                     'nid'           => $faker->unique()->numerify('########'),
                     'nama'          => $nama,
                     'alamat'        => $faker->address,
+                    'tanggal_lahir' => $faker->dateTimeBetween('-50 years', 'now'),
                     'jenis_kelamin' => $faker->randomElement(['L', 'P']),
                     'handphone'     => $faker->unique()->phoneNumber,
                 ]

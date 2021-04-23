@@ -1,11 +1,26 @@
+$('input[type="file"]').on('change', function () {
+    let filenames = [];
+    let files = document.getElementById('photo').files;
+
+    for (let i in files) {
+        if (files.hasOwnProperty(i)) {
+            filenames.push(files[i].name);
+        }
+    }
+
+    $(this).next('.custom-file-label').addClass("selected").
+        html(filenames.join(', '));
+});
+
+
 let btnHapus = document.getElementById('btn-hapus');
 btnHapus.addEventListener('click', deleteConfirmation);
 
 function deleteConfirmation(event) {
     event.preventDefault();
     Swal.fire({
-        title: 'Annda yakin?',
-        text: 'Hapus data pasien ' + event.target.getAttribute('data-name'),
+        title: 'Anda yakin?',
+        text: 'Hapus data  ' + event.target.getAttribute('data-name'),
         icon: 'warning',
         showCancelButton: true,
         cancelButtonColor: '#6c757d',
@@ -39,17 +54,3 @@ function confirmation(event) {
         }
     });
 }
-
-$('input[type="file"]').on('change', function () {
-    let filenames = [];
-    let files = document.getElementById('photo').files;
-
-    for (let i in files) {
-        if (files.hasOwnProperty(i)) {
-            filenames.push(files[i].name);
-        }
-    }
-
-    $(this).next('.custom-file-label').addClass("selected").
-        html(filenames.join(', '));
-});

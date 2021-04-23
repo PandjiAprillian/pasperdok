@@ -1,10 +1,8 @@
 @extends('layouts.worker')
 
 @section('content')
-<!-- Begin Page Content -->
 <div class="container-fluid">
 
-    <!-- DataTales Example -->
     <div class="row">
         <div class="col">
             <div class="card shadow mb-4">
@@ -58,5 +56,4 @@
     </div>
 
 </div>
-<!-- /.container-fluid -->
 @endsection
