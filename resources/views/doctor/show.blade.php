@@ -7,7 +7,7 @@
     <div class="card">
         <div class="card-header">
             <div class="row justify-content-between align-items-center px-3">
-                Data Dr. {{ $doctor->nama }}
+                <h6 class="m-0 font-weight-bold text-primary">Data {{ $doctor->nama }}</h6>
                 <a href="{{ route('doctors.edit', ['doctor' => $doctor->id]) }}" class="btn btn-success">Edit
                     Profile</a>
             </div>

@@ -16,7 +16,6 @@ class CreateDiseasesTable extends Migration
         Schema::create('diseases', function (Blueprint $table) {
             $table->id();
             $table->string('nama_penyakit')->unique();
-            $table->foreignId('doctor_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -93,6 +93,7 @@ class AdminController extends Controller
         //
     }
 
+    //? admin.data.pasien
     public function dataPasien()
     {
         $patients = Patient::orderBy('nama')->paginate(10);
@@ -110,15 +111,7 @@ class AdminController extends Controller
         $diseasesTaken = Disease::whereIn('id', $patient->diseases->pluck('id')->all())->get();
         $rooms = Room::withCount('patients')->orderBy('nomor_kamar')->get();
 
-        $doctorSpesialists = Disease::where('doctor_id', $diseasesTaken->pluck('doctor_id')->all())->get();
-        $spesialists = [];
-        for ($i = 0; $i < count($doctorSpesialists); $i++) {
-            if (in_array($doctorSpesialists[$i]->nama_penyakit, $diseasesTaken->pluck('nama_penyakit')->all())) {
-                array_push($spesialists, $doctorSpesialists[$i]->nama_penyakit);
-            }
-            continue;
-        }
-        return view('admin.patient.show', compact('patient', 'diseases', 'diseasesTaken', 'spesialists', 'rooms'));
+        return view('admin.patient.show', compact('patient', 'diseases', 'diseasesTaken', 'rooms'));
     }
 
     public function editDatapasien(Patient $patient)
@@ -140,9 +133,17 @@ class AdminController extends Controller
         return redirect()->route('admins.data.patient')->withSuccess("Pasien {$patient->nama} berhasil dihapus!");
     }
 
+    //? admin.data.perawat
     public function dataPerawat()
     {
         $nurses = Nurse::paginate(5);
         return view('admin.nurse.data-perawat', compact('nurses'));
+    }
+
+    //? admin.dokter.dokter
+    public function dataDokter()
+    {
+        $doctors = Doctor::orderBy('nama')->paginate(5);
+        return view('admin.doctor.data-dokter', compact('doctors'));
     }
 }

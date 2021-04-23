@@ -257,9 +257,7 @@ request()->is("admins/data-pasien/{$patient->id}/edit"))
         <label for="penyakit"><b>Menderita</b></label>
         <ul class="list-group list-group-flush">
             @if ((str_replace(url('/'), '', url()->previous()) == '/doctors'))
-            @foreach ($spesialists as $spesialistPenyakit)
-            <p class="form-control-plaintext text-muted"><i>{{ $spesialistPenyakit }}</i></p>
-            @endforeach
+            <p class="form-control-plaintext text-muted"><i>{{ $nama_penyakit }}</i></p>
             @else
             @foreach ($diseasesTaken as $disease)
             <p class="form-control-plaintext text-muted"><i>{{ $disease->nama_penyakit }}</i></p>

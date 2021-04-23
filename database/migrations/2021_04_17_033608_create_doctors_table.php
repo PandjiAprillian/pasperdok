@@ -22,6 +22,7 @@ class CreateDoctorsTable extends Migration
             $table->char('jenis_kelamin', 1);
             $table->string('handphone', 30);
             $table->string('photo')->default('default_profile.jpg');
+            $table->foreignId('disease_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

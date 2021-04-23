@@ -20,7 +20,7 @@ class DiseaseSeeder extends Seeder
         $diseases = [
             'Ablasi Retina', 'Abses Gigi', 'Batu Ginjal', 'Batuk', 'Batuk Rejan',
             'Biang Keringat', 'Bintitan', 'Buta Warna', 'Cacar Monyet', 'Demam Berdarah',
-            'Demam Kuning', 'Diabeter', 'Dislokasi Bahu', 'Ebola', 'Flu Burung', 'Gagal Ginjal',
+            'Demam Kuning', 'Diabetes', 'Dislokasi Bahu', 'Ebola', 'Flu Burung', 'Gagal Ginjal',
             'Batu Ginjal', 'Usus Buntu', 'Tubercolosis (TBC)', 'Hepatitis', 'Tipes', 'Panas Dingin',
             'Herpes', 'Hipertensi', 'Infeksi Ginjal', 'Insomnia', 'Kanker Darah', 'Kanker Kulit',
             'Muntah Darah', 'Karang Gigi', 'Panu', 'Jamur', 'Asam Lambung', 'Rematik', 'Pilek',
@@ -31,7 +31,6 @@ class DiseaseSeeder extends Seeder
             \App\Models\Disease::create(
                 [
                     'nama_penyakit' => $faker->unique()->randomElement($diseases),
-                    'doctor_id'     => $faker->numberBetween(1, \App\Models\Doctor::count())
                 ]
             );
         }

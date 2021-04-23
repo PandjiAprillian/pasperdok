@@ -36,6 +36,7 @@ class DoctorSeeder extends Seeder
                 'tanggal_lahir' => $faker->dateTimeBetween('-50 years', 'now'),
                 'jenis_kelamin' => 'L',
                 'handphone'     => $faker->unique()->phoneNumber,
+                'disease_id'    => $faker->numberBetween(1, \App\Models\Disease::count())
             ]
         );
 
@@ -62,6 +63,7 @@ class DoctorSeeder extends Seeder
                     'tanggal_lahir' => $faker->dateTimeBetween('-50 years', 'now'),
                     'jenis_kelamin' => $faker->randomElement(['L', 'P']),
                     'handphone'     => $faker->unique()->phoneNumber,
+                    'disease_id'    => $faker->numberBetween(1, \App\Models\Disease::count())
                 ]
             );
 

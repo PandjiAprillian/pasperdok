@@ -11,21 +11,21 @@ class Doctor extends Model
     use HasFactory, HasRoles;
 
     protected $fillable = [
-        'nid' , 'nama', 'alamat', 'jenis_kelamin', 'handphone', 'photo'
+        'nid' , 'nama', 'alamat', 'tanggal_lahir', 'jenis_kelamin', 'handphone', 'photo', 'disease_id'
     ];
 
     public function user()
     {
-        return $this->belongsTo('\App\Models\User');
+        return $this->belongsTo(User::class);
     }
 
-    public function diseases()
+    public function disease()
     {
-        return $this->hasMany('\App\Models\Disease');
+        return $this->belongsTo(Disease::class);
     }
 
     public function attendances()
     {
-        return $this->morphMany('\App\Models\Attendance', 'attendanceable');
+        return $this->morphMany(Attendance::class, 'attendanceable');
     }
 }

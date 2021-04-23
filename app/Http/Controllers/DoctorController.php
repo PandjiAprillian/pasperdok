@@ -12,6 +12,7 @@ use DateTime;
 use DateTimeZone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -27,8 +28,8 @@ class DoctorController extends Controller
         $date = new DateTime('now', new DateTimeZone('Asia/Jakarta'));
         $dateNow = $date->format('Y-m-d');
 
-        $patients = Patient::whereHas('diseases', function ($query) {
-            $query->where('doctor_id', Auth::user()->doctor->id);
+        $patients = Patient::whereHas('diseases', function ($q) {
+            $q->where('diseases.id', Auth::user()->doctor->disease_id);
         })->paginate(5);
 
         $attendances = Attendance::where(
@@ -82,7 +83,13 @@ class DoctorController extends Controller
      */
     public function show(Doctor $doctor)
     {
-        return view('doctor.show', compact('doctor'));
+        $tanggalLahir = explode('-', $doctor->tanggal_lahir);
+        $doctor['thn'] = $tanggalLahir[0];
+        $doctor['bln'] = $tanggalLahir[1];
+        $doctor['tgl'] = $tanggalLahir[2];
+
+        $spesialist = Disease::where('id', $doctor->disease_id)->first();
+        return view('doctor.show', compact('doctor', 'spesialist'));
     }
 
     /**
@@ -93,7 +100,13 @@ class DoctorController extends Controller
      */
     public function edit(Doctor $doctor)
     {
-        return view('doctor.edit', compact('doctor'));
+        $tanggalLahir = explode('-', $doctor->tanggal_lahir);
+        $doctor['thn'] = $tanggalLahir[0];
+        $doctor['bln'] = $tanggalLahir[1];
+        $doctor['tgl'] = $tanggalLahir[2];
+
+        $diseases = Disease::orderBy('nama_penyakit')->get();
+        return view('doctor.edit', compact('doctor', 'diseases'));
     }
 
     /**
@@ -105,15 +118,23 @@ class DoctorController extends Controller
      */
     public function update(Request $request, Doctor $doctor)
     {
+        $tanggalLahir = $request->thn
+            . str_pad($request->bln, 2, 0, STR_PAD_LEFT)
+            . str_pad($request->tgl, 2, 0, STR_PAD_LEFT);
+        $request['tanggal_lahir'] = $tanggalLahir;
+
         $data = $request->validate(
             [
-                'nid'           => 'required|integer|min:8|unique:doctors,nid,' . $doctor->id,
-                'nama'          => 'required|string|max:50',
-                'email'         => 'required|email|unique:users,email,' . $doctor->user->id,
-                'alamat'        => 'required',
-                'jenis_kelamin' => 'required|in:L,P',
-                'handphone'     => 'required|numeric',
-                'photo'         => 'file|image|max:5000',
+                'nid'              => 'required|numeric|min:8|unique:doctors,nid,' . $doctor->id,
+                'nama'             => 'required|string|max:50',
+                'email'            => 'required|email|unique:users,email,' . $doctor->user->id,
+                'password'         => ($request->password == null ? 'sometimes' : 'confirmed'),
+                'tanggal_lahir' => 'required|date|before:-10 years|after:-100 years',
+                'alamat'           => 'required',
+                'jenis_kelamin'    => 'required|in:L,P',
+                'handphone'        => 'required|numeric',
+                'photo'            => 'file|image|max:5000',
+                'disease_id'       => 'required|exists:\App\Models\Disease,id'
             ]
         );
 
@@ -126,13 +147,16 @@ class DoctorController extends Controller
 
         $data['photo'] = $namaFile;
 
-        User::where('id', Auth::user()->id)->first()->update(
+        User::where('id', $doctor->user->id)->first()->update(
             [
-                'email' => $request->email
+                'nama'     => $request->nama,
+                'email'    => $request->email,
+                'password' => ($request->password == null ? $doctor->user->password : Hash::make($request->password))
             ]
         );
 
         $doctor->update($data);
+
         return redirect()->route('doctors.show', ['doctor' => $doctor->id])->with('success', 'Update data berhasil!');
     }
 

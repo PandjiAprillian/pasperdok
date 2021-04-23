@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Disease;
+use App\Models\Doctor;
 use App\Models\Patient;
 use App\Models\Room;
 use App\Models\User;
@@ -119,15 +120,9 @@ class PatientController extends Controller
         $rooms = Room::withCount('patients')->orderBy('nomor_kamar')->get();
 
         if (Auth::user()->hasRole('doctor')) {
-            $doctorSpesialists = Disease::where('doctor_id', $diseasesTaken->pluck('doctor_id')->all())->get();
-            $spesialists = [];
-            for ($i=0; $i < count($doctorSpesialists); $i++) {
-                if (in_array($doctorSpesialists[$i]->nama_penyakit, $diseasesTaken->pluck('nama_penyakit')->all())) {
-                    array_push($spesialists, $doctorSpesialists[$i]->nama_penyakit);
-                }
-                continue;
-            }
-            return view('patient.show', compact('patient', 'diseases', 'diseasesTaken', 'spesialists', 'rooms'));
+            $doctorSpesialists = Doctor::where('id', Auth::user()->doctor->id)->first();
+            $nama_penyakit = $doctorSpesialists->disease->nama_penyakit;
+            return view('patient.show', compact('patient', 'diseases', 'diseasesTaken', 'nama_penyakit', 'rooms'));
         }
 
         return view('patient.show', compact('patient', 'diseases', 'diseasesTaken', 'rooms'));

@@ -90,7 +90,8 @@
         class="nav-item
         {{ (request()->is('admins') ||
             request()->is('admins/data-pasien') ||
-            request()->is('admins/data-perawat'))
+            request()->is('admins/data-perawat') ||
+            request()->is('admins/data-dokter'))
             ? 'active'
             : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
@@ -110,8 +111,8 @@
                 <a class="collapse-item" href="{{ route('admins.data.nurse') }}">
                     {!! request()->is('admins/data-perawat') ? '<b>Data Perawat</b>' : 'Data Perawat' !!}
                 </a>
-                <a class="collapse-item" href="#">
-                    Data Dokter
+                <a class="collapse-item" href="{{ route('admins.data.doctor') }}">
+                    {!! request()->is('admins/data-dokter') ? '<b>Data Dokter</b>' : 'Data Dokter' !!}
                 </a>
                 <a class="collapse-item" href="#">
                     Data Penyakit

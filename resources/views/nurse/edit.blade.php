@@ -8,7 +8,7 @@
         <div class="col">
             <div class="card">
                 <div class="card-header">
-                    <h6 class="m-0 font-weight-bold text-primary d-inline">Edit data Perawat {{ $nurse->nama }}</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Edit data Perawat {{ $nurse->nama }}</h6>
                 </div>
                 <div class="card-body">
                     <div class="row">

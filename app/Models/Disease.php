@@ -9,13 +9,13 @@ class Disease extends Model
 {
     use HasFactory;
 
-    public function doctor()
+    public function doctors()
     {
-        return $this->belongsTo('\App\Models\Doctor');
+        return $this->hasMany(Doctor::class);
     }
 
     public function patients()
     {
-        return $this->belongsToMany('\App\Models\patient')->withTimestamps();
+        return $this->belongsToMany(Patient::class)->withTimestamps();
     }
 }
