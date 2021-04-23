@@ -5,7 +5,8 @@ $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agus
 
 @csrf
 
-@if (request()->is("register") || request()->is("patients/{$patient->id}/edit") || request()->is("admins/data-pasien/{$patient->id}/edit"))
+@if (request()->is("register") || request()->is("patients/{$patient->id}/edit") ||
+request()->is("admins/data-pasien/{$patient->id}/edit"))
 <div class="form-group row justify-content-center">
     <label for="nik" class="col-sm-6 col-form-label text-md-right">NIK</label>
     <div class="col-sm-6">
@@ -44,11 +45,11 @@ $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agus
     </div>
 </div>
 
-@if ($button == 'Sign Up')
 <div class="form-group row">
     <label for="password" class="col-sm-6 col-form-label text-md-right">password</label>
     <div class="col-sm-6">
-        <input type="password" class="form-control" name="password" id="password">
+        <input type="password" class="form-control" name="password" id="password"
+            placeholder="{{ ($button == 'Tambah' || $button == 'Sign Up') ? "Input password" : "Input Password baru" }}">
         @error('password')
         <small class="form-text text-danger">
             <b>{{ $message }}</b>
@@ -60,10 +61,10 @@ $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agus
 <div class="form-group row">
     <label for="password_confirmation" class="col-sm-6 col-form-label text-md-right">Konfirmasi Password</label>
     <div class="col-sm-6">
-        <input type="password" class="form-control" name="password_confirmation" id="password_confirmation">
+        <input type="password" class="form-control" name="password_confirmation" id="password_confirmation"
+            placeholder="Ketik ulang password">
     </div>
 </div>
-@endif
 
 <div class="form-group row">
     <label for="tanggal_lahir" class="col-sm-6 col-form-label text-md-right">Tanggal Lahir</label>
@@ -177,9 +178,40 @@ $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agus
     </div>
 </div>
 
-@if (request()->is("admins/data-pasien/{$patient->id}/edit"))
-    <input type="hidden" name="admin" value="1">
+@auth
+@if (Auth::user()->hasRole('admin'))
+<div class="form-group row">
+    <label for="rawat_inap" class="col-sm-6 col-form-label text-md-right">Perawatan</label>
+    <div class="col-sm-6">
+        <select class="form-control form-control-sm" name="rawat_inap" id="rawat_inap">
+            <option value="1" {{ $patient->rawat_inap == 1 ? 'selected' : '' }}>Rawat Inap</option>
+            <option value="2" {{ $patient->rawat_inap == 2 ? 'selected' : '' }}>Rawat Jalan</option>
+        </select>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="no_kamar" class="col-sm-6 col-form-label text-md-right">No.Kamar</label>
+    <div class="col-sm-6">
+        <select class="form-control form-control-sm" name="room_id" id="no_kamar">
+            @foreach ($rooms as $room)
+            @if ($room->nomor_kamar == 'smtr' || $room->patients_count == 2)
+            @continue
+            @elseif ($patient->room_id == $room->id)
+            <option value="{{ $patient->room->id }}" selected>
+                {{ $patient->room->nomor_kamar }}
+            </option>
+            @else
+            <option value="{{ $room->id }}">{{ $room->nomor_kamar }}</option>
+            @endif
+            @endforeach
+        </select>
+    </div>
+</div>
+
+<input type="hidden" name="admin" value="1">
 @endif
+@endauth
 
 <div class="form-group">
     <div class="row">
@@ -215,7 +247,8 @@ $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agus
     </div>
     <div class="col">
         <label for="jenis_kelamin"><b>Jenis Kelamin</b></label>
-        <p class="form-control-plaintext text-muted">{{ ($patient->jenis_kelamin == 'L') ? 'Laki - Laki' : 'Perempuan' }}</p>
+        <p class="form-control-plaintext text-muted">
+            {{ ($patient->jenis_kelamin == 'L') ? 'Laki - Laki' : 'Perempuan' }}</p>
     </div>
 </div>
 
@@ -224,13 +257,13 @@ $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agus
         <label for="penyakit"><b>Menderita</b></label>
         <ul class="list-group list-group-flush">
             @if ((str_replace(url('/'), '', url()->previous()) == '/doctors'))
-                @foreach ($spesialists as $spesialistPenyakit)
-                <p class="form-control-plaintext text-muted"><i>{{ $spesialistPenyakit }}</i></p>
-                @endforeach
+            @foreach ($spesialists as $spesialistPenyakit)
+            <p class="form-control-plaintext text-muted"><i>{{ $spesialistPenyakit }}</i></p>
+            @endforeach
             @else
-                @foreach ($diseasesTaken as $disease)
-                    <p class="form-control-plaintext text-muted"><i>{{ $disease->nama_penyakit }}</i></p>
-                @endforeach
+            @foreach ($diseasesTaken as $disease)
+            <p class="form-control-plaintext text-muted"><i>{{ $disease->nama_penyakit }}</i></p>
+            @endforeach
             @endif
         </ul>
     </div>

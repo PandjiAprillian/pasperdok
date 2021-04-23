@@ -63,27 +63,6 @@ $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agus
     </div>
 </div>
 
-@if ($button == 'create')
-<div class="form-group row">
-    <label for="password" class="col-sm-6 col-form-label text-md-right">password</label>
-    <div class="col-sm-6">
-        <input type="password" class="form-control" name="password" id="password">
-        @error('password')
-        <small class="form-text text-danger">
-            <b>{{ $message }}</b>
-        </small>
-        @enderror
-    </div>
-</div>
-
-<div class="form-group row">
-    <label for="password_confirmation" class="col-sm-6 col-form-label text-md-right">Konfirmasi Password</label>
-    <div class="col-sm-6">
-        <input type="password" class="form-control" name="password_confirmation" id="password_confirmation">
-    </div>
-</div>
-@endif
-
 <div class="form-group row">
     <label for="alamat" class="col-sm-6 col-form-label text-md-right">Alamat</label>
     <div class="col-sm-6">

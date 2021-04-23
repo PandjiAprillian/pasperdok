@@ -76,7 +76,7 @@ class NurseController extends Controller
 
         $request->validate(
             [
-            'nip'           => 'required|integer|min:8|unique:nurses',
+                'nip'           => 'required|integer|min:8|unique:nurses',
                 'nama'          => 'required|string|max:50',
                 'email'         => 'required|email|unique:users',
                 'password'      => 'required|confirmed',
@@ -198,22 +198,13 @@ class NurseController extends Controller
 
         $data['photo'] = $namaFile;
 
-
-        if (Auth::user()->hasRole('nurse')) {
-            User::where('id', Auth::user()->id)->first()->update(
-                [
-                    'email' => $request->email,
-                    'password' => ($request->password == null ? $nurse->user->password : Hash::make($request->password))
-                ]
-            );
-        } else {
-            User::where('id', $nurse->user->id)->first()->update(
-                [
-                    'email'    => $request->email,
-                    'password' => ($request->password == null ? $nurse->user->password : Hash::make($request->password))
-                ]
-            );
-        };
+        User::where('id', $nurse->user->id)->first()->update(
+            [
+                'nama'     => $request->nama,
+                'email'    => $request->email,
+                'password' => ($request->password == null ? $nurse->user->password : Hash::make($request->password))
+            ]
+        );
 
         $nurse->update($data);
 

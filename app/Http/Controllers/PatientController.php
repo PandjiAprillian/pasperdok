@@ -161,8 +161,8 @@ class PatientController extends Controller
     public function update(Request $request, Patient $patient)
     {
         $tanggalLahir = $request->thn
-            . str_pad($request->bln, 2, 0, STR_PAD_LEFT)
-            . str_pad($request->tgl, 2, 0, STR_PAD_LEFT);
+        . str_pad($request->bln, 2, 0, STR_PAD_LEFT)
+        . str_pad($request->tgl, 2, 0, STR_PAD_LEFT);
         $request['tanggal_lahir'] = $tanggalLahir;
 
         $data = $request->validate(
@@ -170,13 +170,16 @@ class PatientController extends Controller
                 'nik'           => 'required|integer|min:8|unique:patients,nik,' . $patient->id,
                 'nama'          => 'required|string|max:50',
                 'email'         => 'required|email|unique:users,email,' . $patient->user->id,
+                'password'      => ($request->password == null ? 'sometimes' : 'confirmed'),
                 'tanggal_lahir' => 'required|date|before:-10 years|after:-100 years',
                 'alamat'        => 'required',
                 'jenis_kelamin' => 'required|in:L,P',
                 'handphone'     => 'required|numeric',
                 'photo'         => 'file|image|max:5000',
                 'diseases.*'    => 'distinct|in:' . implode(',', \App\Models\Disease::pluck('id')->all()),
-                'keluhan'       => 'required'
+                'keluhan'       => 'required',
+                'rawat_inap'    => ($request->rawat_inap ? 'required|in:1,2' : ''),
+                'room_id'       => ($request->room_id ? 'required|exists:App\Models\Room,id' : ''),
             ]
         );
 
@@ -191,6 +194,7 @@ class PatientController extends Controller
             [
                 'nama'     => $request->nama,
                 'email'    => $request->email,
+                'password' => ($request->password == null ? $patient->user->password : Hash::make($request->password)),
             ]
         );
 
@@ -206,6 +210,8 @@ class PatientController extends Controller
                 'handphone'     => $request->handphone,
                 'photo'         => $namaFile,
                 'keluhan'       => $request->keluhan,
+                'rawat_inap'    => ($request->rawat_inap ? $request->rawat_inap : $patient->rawat_inap),
+                'room_id'       => ($request->room_id ? $request->room_id : $patient->room_id),
             ]
         );
 

@@ -127,10 +127,11 @@ class AdminController extends Controller
         $patient['thn'] = $tanggalLahir[0];
         $patient['bln'] = $tanggalLahir[1];
         $patient['tgl'] = $tanggalLahir[2];
+        $rooms = Room::withCount('patients')->orderBy('nomor_kamar')->get();
         $diseases = Disease::orderBy('nama_penyakit')->get();
         $diseasesPatient = Disease::whereIn('id', $patient->diseases->pluck('id')->all())->get();
         $diseasesTaken = $diseasesPatient->pluck('id')->toArray();
-        return view('admin.patient.edit', compact('patient', 'diseases', 'diseasesTaken'));
+        return view('admin.patient.edit', compact('patient', 'diseases', 'diseasesTaken', 'rooms'));
     }
 
     public function destroyDataPasien(Patient $patient)
