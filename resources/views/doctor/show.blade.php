@@ -8,8 +8,17 @@
         <div class="card-header">
             <div class="row justify-content-between align-items-center px-3">
                 <h6 class="m-0 font-weight-bold text-primary">Data {{ $doctor->nama }}</h6>
-                <a href="{{ route('doctors.edit', ['doctor' => $doctor->id]) }}" class="btn btn-success">Edit
-                    Profile</a>
+                <div class="row">
+                    <a href="{{ route('doctors.edit', ['doctor' => $doctor->id]) }}" class="btn btn-success">Edit
+                        Profile</a>
+                    @if (Auth::user()->hasRole('admin'))
+                        <form action="{{ route('doctors.destroy', ['doctor' => $doctor->id]) }}" method="post">
+                            @method('DELETE')
+                            @csrf
+                            <button type="submit" class="btn btn-danger ml-2" id="btn-hapus" data-name="{{ $doctor->nama }}">Hapus</button>
+                        </form>
+                    @endif
+                </div>
             </div>
         </div>
         <div class="card-body d-flex justify-content-center">

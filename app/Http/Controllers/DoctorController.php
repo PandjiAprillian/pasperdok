@@ -61,7 +61,8 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        //
+        $diseases = Disease::orderBy('nama_penyakit')->get();
+        return view('admin.doctor.create', compact('diseases'));
     }
 
     /**
@@ -72,7 +73,57 @@ class DoctorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $tanggalLahir = $request->thn
+            . str_pad($request->bln, 2, 0, STR_PAD_LEFT)
+            . str_pad($request->tgl, 2, 0, STR_PAD_LEFT);
+        $request['tanggal_lahir'] = $tanggalLahir;
+
+        $request->validate(
+            [
+                'nid'              => 'required|numeric|min:8|unique:doctors',
+                'nama'             => 'required|string|max:50',
+                'email'            => 'required|email|unique:users,email',
+                'password'         => 'required|confirmed',
+                'tanggal_lahir'    => 'required|date|before:-10 years|after:-100 years',
+                'alamat'           => 'required',
+                'jenis_kelamin'    => 'required|in:L,P',
+                'handphone'        => 'required|numeric',
+                'photo'            => 'file|image|max:5000',
+                'disease_id'       => 'required|exists:\App\Models\Disease,id'
+            ]
+        );
+
+        if ($request->hasFile('photo')) {
+            $namaFile = Str::slug($request->nama) . '-' . time() . '.' . $request->photo->getClientOriginalExtension();
+            $request->photo->storeAs('public/uploads/image', $namaFile);
+        } else {
+            $namaFile = 'default_profile.jpg';
+        }
+
+        $userAsDoctor = User::create(
+            [
+                'nama'     => $request->nama,
+                'email'    => $request->email,
+                'password' => Hash::make($request->password),
+            ]
+        );
+
+        $userAsDoctor->doctor()->create(
+            [
+                'nid'              => $request->nid,
+                'nama'             => $request->nama,
+                'alamat'           => $request->alamat,
+                'tanggal_lahir'    => $request->tanggal_lahir,
+                'jenis_kelamin'    => $request->jenis_kelamin,
+                'handphone'        => $request->handphone,
+                'photo'            => $namaFile,
+                'disease_id'       => $request->disease_id
+            ]
+        );
+
+        $userAsDoctor->assignRole('doctor');
+        $doctorId = Doctor::where('nid', $request->nid)->first();
+        return redirect()->route('doctors.show', ['doctor' => $doctorId->id])->withSuccess("Data dokter {$request->nama} berhasil di daftarkan!");
     }
 
     /**
@@ -168,7 +219,8 @@ class DoctorController extends Controller
      */
     public function destroy(Doctor $doctor)
     {
-        //
+        User::where('id', $doctor->user->id)->delete();
+        return redirect()->route('admins.data.doctor')->withSuccess("Data dr. {$doctor->nama} berhasil dihapus!");
     }
 
     public function rekapJadwal(Doctor $doctor)
