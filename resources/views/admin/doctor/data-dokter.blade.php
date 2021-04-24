@@ -31,21 +31,6 @@
                                     <td>{{ $doctor->nama }}</td>
                                     <td>{{ \Carbon\Carbon::create($doctor->tanggal_lahir)->age }} Tahun</td>
                                     <td>{{ $doctor->user->email }}</td>
-                                    {{-- <td>{{ $doctor->jenis_kelamin == 'L' ? 'Laki - Laki' : 'Perempuan' }}</td> --}}
-                                    {{-- <td>
-                                        <div>
-                                            <button id="btnGroupDrop1" type="button"
-                                                class="btn btn-warning btn-sm dropdown-toggle text-dark" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                Spesialist Penyakit
-                                            </button>
-                                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                @foreach ($doctor->diseases as $disease)
-                                                    <a href="#" class="dropdown-item">{{ $disease->nama_penyakit }}</a>
-                                                @endforeach
-                                            </div>
-                                        </div>
-                                    </td> --}}
                                     <td>
                                         <a href="{{ route('doctors.show', ['doctor' => $doctor->id]) }}" class="btn btn-info btn-circle btn-sm">
                                             <i class="fas fa-info-circle"></i>

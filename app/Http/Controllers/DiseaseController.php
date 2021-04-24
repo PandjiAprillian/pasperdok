@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Disease;
+use App\Models\Doctor;
 use Illuminate\Http\Request;
 
 class DiseaseController extends Controller
@@ -14,7 +15,8 @@ class DiseaseController extends Controller
      */
     public function index()
     {
-        //
+        $diseases = Disease::orderBy('nama_penyakit')->paginate(5);
+        return view('admin.disease.data-penyakit', compact('diseases'));
     }
 
     /**
@@ -24,7 +26,7 @@ class DiseaseController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.disease.create');
     }
 
     /**
@@ -35,7 +37,15 @@ class DiseaseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate(
+            [
+                'nama_penyakit' => 'required|min:5|max:50'
+            ]
+        );
+
+        Disease::create($data);
+        $newDiseaseID = Disease::where('nama_penyakit', $request->nama_penyakit)->first();
+        return redirect()->route('diseases.show', ['disease' => $newDiseaseID->id])->withSuccess("Penyakit {$request->nama_penyakit} berhasil di tambahkan!");
     }
 
     /**
@@ -46,7 +56,7 @@ class DiseaseController extends Controller
      */
     public function show(Disease $disease)
     {
-        //
+        return view('admin.disease.show', compact('disease'));
     }
 
     /**
@@ -57,7 +67,9 @@ class DiseaseController extends Controller
      */
     public function edit(Disease $disease)
     {
-        //
+        $doctors = Doctor::orderBy('nama')->get();
+        $spesialists = $disease->doctors->pluck('id')->all();
+        return view('admin.disease.edit', compact('disease', 'doctors', 'spesialists'));
     }
 
     /**
@@ -69,7 +81,15 @@ class DiseaseController extends Controller
      */
     public function update(Request $request, Disease $disease)
     {
-        //
+        $data = $request->validate(
+            [
+                'nama_penyakit' => 'required|max:50',
+            ]
+        );
+
+        $disease->update($data);
+
+        return redirect()->route('diseases.show', ['disease' => $disease->id])->withSuccess("Data penyakit {$disease->nama_penyakit} berhasil di update!");
     }
 
     /**
@@ -80,6 +100,7 @@ class DiseaseController extends Controller
      */
     public function destroy(Disease $disease)
     {
-        //
+        $disease->delete();
+        return redirect()->route('diseases.index')->withSuccess("Data penyakit {$disease->nama_penyakit} berhasil dihapus!");
     }
 }

@@ -41,8 +41,10 @@
                 <a class="collapse-item" href="{{ route('doctors.index') }}">
                     {!! request()->is('doctors') ? '<b>Dashboard</b>' : 'Dashboard' !!}
                 </a>
-                <a class="collapse-item" href="{{ route('rekap.jadwal.dokter', ['doctor' => Auth::user()->doctor->id]) }}">
-                    {!! request()->is("doctors/" . Auth::user()->doctor->id . "/rekap-jadwal") ? '<b>Rekap Jam Kerja</b>'
+                <a class="collapse-item"
+                    href="{{ route('rekap.jadwal.dokter', ['doctor' => Auth::user()->doctor->id]) }}">
+                    {!! request()->is("doctors/" . Auth::user()->doctor->id . "/rekap-jadwal") ? '<b>Rekap Jam
+                        Kerja</b>'
                     : 'Rekap Jam Kerja' !!}
                 </a>
             </div>
@@ -70,7 +72,8 @@
                 <a class="collapse-item" href="{{ route('nurses.index') }}">
                     {!! request()->is('nurses') ? '<b>Dashboard</b>' : 'Dashboard' !!}
                 </a>
-                <a class="collapse-item" href="{{ route('rekap.jadwal.perawat', ['nurse' => Auth::user()->nurse->id]) }}">
+                <a class="collapse-item"
+                    href="{{ route('rekap.jadwal.perawat', ['nurse' => Auth::user()->nurse->id]) }}">
                     {!! request()->is("nurses/" . Auth::user()->nurse->id . "/rekap-jadwal") ? '<b>Rekap Jam Kerja</b>'
                     : 'Rekap Jam Kerja' !!}
                 </a>
@@ -86,12 +89,12 @@
 
     <!-- Dokter -->
     @if (Auth::user()->hasRole('admin'))
-    <li
-        class="nav-item
+    <li class="nav-item
         {{ (request()->is('admins') ||
             request()->is('admins/data-pasien') ||
             request()->is('admins/data-perawat') ||
-            request()->is('admins/data-dokter'))
+            request()->is('admins/data-dokter') ||
+            request()->is('diseases'))
             ? 'active'
             : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
@@ -114,8 +117,8 @@
                 <a class="collapse-item" href="{{ route('admins.data.doctor') }}">
                     {!! request()->is('admins/data-dokter') ? '<b>Data Dokter</b>' : 'Data Dokter' !!}
                 </a>
-                <a class="collapse-item" href="#">
-                    Data Penyakit
+                <a class="collapse-item" href="{{ route('diseases.index') }}">
+                    {!! request()->is('diseases') ? '<b>Data Penyakit</b>' : 'Data Penyakit' !!}
                 </a>
                 <a class="collapse-item" href="#">
                     Data Kamar

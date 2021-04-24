@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\DiseaseController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\NurseController;
 use App\Http\Controllers\PatientController;
@@ -34,3 +35,5 @@ Route::delete('/admins/{patient}', [AdminController::class, 'destroyDataPasien']
 Route::get('/admins/data-perawat', [AdminController::class, 'dataPerawat'])->name('admins.data.nurse');
 Route::get('/admins/data-dokter', [AdminController::class, 'dataDokter'])->name('admins.data.doctor');
 Route::resource('/admins', AdminController::class);
+
+Route::resource('/diseases', DiseaseController::class);
