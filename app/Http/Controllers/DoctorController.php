@@ -61,7 +61,7 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        $diseases = Disease::orderBy('nama_penyakit')->get();
+        $diseases = Disease::doesntHave('doctors')->orderBy('nama_penyakit')->get();
         return view('admin.doctor.create', compact('diseases'));
     }
 

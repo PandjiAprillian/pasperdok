@@ -216,10 +216,11 @@ $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agus
     <div class="col">
         <label for="penyakit"><b>Spesialist</b></label>
         <ul class="list-group list-group-flush">
-            {{-- @foreach ($spesialists as $spesialist)
+            @if (Auth::user()->hasRole('admin'))
+            <a href="{{ route('diseases.show', ['disease' => $spesialist->id]) }}" class="form-control-plaintext text-primary" style="text-decoration: none">{{ $spesialist->nama_penyakit }}</a>
+            @else
             <p class="form-control-plaintext text-muted"><i>{{ $spesialist->nama_penyakit }}</i></p>
-            @endforeach --}}
-            <p class="form-control-plaintext text-muted"><i>{{ $spesialist->nama_penyakit }}</i></p>
+            @endif
         </ul>
     </div>
 </div>
