@@ -2,47 +2,46 @@
 
     <div class="footer-top">
         <div class="container">
-            <div class="row">
+            <div class="row justify-content-center">
 
-                <div class="col-lg-3 col-md-6 footer-contact">
-                    <h3>Medilab</h3>
+                <div class="col-sm-4 footer-contact">
+                    <h3>PasPerDok</h3>
+                    <p class="text-lead">
+                        PasPerDok ( Pasien Perawat dan Dokter) adalah sebuah web, yang menampung 4 buah role,
+                        yaitu pasien, perawat, dokter, dan admin. Dibuat dengan menggunakan framework Laravel 8.
+                    </p>
+                    <div class="mt-2">
+                        <a href="https://github.com/PandjiAprillian" target="blank" ><i class="fab fa-github-square fa-2x mr-2"></i></a>
+                        <a href="https://www.facebook.com/PandjiAprilian/" target="blank" ><i class="fab fa-facebook-square fa-2x mr-2"></i></a>
+                        <a href="https://www.instagram.com/pandjiaprillian/" target="blank" ><i class="fab fa-instagram fa-2x mr-2"></i></a>
+                        <a href="https://pandjiaprillian.github.io/" target="blank" ><i class="fas fa-globe-europe fa-2x"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <h4>Alamat</h4>
                     <p>
-                        A108 Adam Street <br>
-                        New York, NY 535022<br>
-                        United States <br><br>
-                        <strong>Phone:</strong> +1 5589 55488 55<br>
-                        <strong>Email:</strong> info@example.com<br>
+                        Jl. Cemerlang No.8, Sukakarya<br>
+                        Sukabumi, Jawa Barat<br>
+                        Indonesia <br><br>
                     </p>
                 </div>
 
-                <div class="col-lg-2 col-md-6 footer-links">
-                    <h4>Useful Links</h4>
-                    <ul>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-3 col-md-6 footer-links">
+                <div class="col-sm-2 footer-links">
                     <h4>Our Services</h4>
                     <ul>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+                        <li><a href="{{ route('register') }}" class="text-primary"><strong>Register</strong></a></li>
+                        <li><a href="#">Help/Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Marketing</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
                     </ul>
                 </div>
 
-                <div class="col-lg-4 col-md-6 footer-newsletter">
-                    <h4>Join Our Newsletter</h4>
-                    <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
-                    <form action="" method="post">
-                        <input type="email" name="email"><input type="submit" value="Subscribe">
-                    </form>
+                <div class="col-sm-3 footer-newsletter">
+                    <h4>Hubungi Kami</h4>
+                    <i class="fas fa-mobile mr-2"></i> +6289696961232<br>
+                    <i class="fas fa-envelope mr-2"></i> pandjiaprilian@outlook.com<br>
                 </div>
 
             </div>
@@ -50,7 +49,7 @@
     </div>
 
     <div class="container d-md-flex justify-content-center py-4">
-        <div class="copyright">
+        <div class="copyright text-center">
             &copy; Copyright <strong><span>PasPerDok</span></strong> {{ date('Y') }}
         </div>
     </div>

@@ -3,15 +3,16 @@
     <div class="container d-flex">
         <div class="contact-info mr-auto">
             <i class="icofont-envelope"></i> <a href="mailto:pasperdok@business.com">pasperdok@business.com</a>
-            <i class="icofont-phone"></i> +6289611851851
+            <i class="icofont-phone"></i> +6289696961232
             <i class="icofont-google-map"></i> Jl. Cemerlang No.8, Sukakarya
         </div>
+        <div>
+        </div>
         <div class="social-links">
-            <a href="#" class="twitter"><i class="icofont-twitter"></i></a>
-            <a href="#" class="facebook"><i class="icofont-facebook"></i></a>
-            <a href="#" class="instagram"><i class="icofont-instagram"></i></a>
-            <a href="#" class="skype"><i class="icofont-skype"></i></a>
-            <a href="#" class="linkedin"><i class="icofont-linkedin"></i></i></a>
+            <a href="https://github.com/PandjiAprillian" target="blank" class="github"><i class="icofont-github"></i></a>
+            <a href="https://www.facebook.com/PandjiAprilian/" target="blank" class="facebook"><i class="icofont-facebook"></i></a>
+            <a href="https://www.instagram.com/pandjiaprillian/" target="blank" class="instagram"><i class="icofont-instagram"></i></a>
+            <a href="https://pandjiaprillian.github.io/" target="blank" class="world"><i class="icofont-world"></i></a>
         </div>
     </div>
 </div>
@@ -31,9 +32,7 @@
                 @endauth
                 <li><a href="#about">About</a></li>
                 <li><a href="#services">Services</a></li>
-                <li><a href="#departments">Departments</a></li>
-                <li><a href="#doctors">Doctors</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#contact">Location</a></li>
                 @elseif (request()->is('post'))
                 <li><a href="{{ url('/') }}">Home</a></li>
                 @endif

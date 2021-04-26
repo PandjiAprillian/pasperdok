@@ -32,6 +32,7 @@
     <link href="/vendor/patient/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
 
     <!-- Template Main CSS File -->
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link href="/css/style.css" rel="stylesheet">
 </head>
 
@@ -72,6 +73,9 @@
     <!-- Template Main JS File -->
     <script src="/js/main.js"></script>
     <script src="/js/script.js"></script>
+
+    {{-- IconiFy --}}
+    <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
 
     {{-- SweetAlert --}}
     @include('sweetalert::alert')

@@ -3,57 +3,60 @@
 
         <div class="section-title">
             <h2>Services</h2>
-            <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
-                consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat
-                sit in iste officiis commodi quidem hic quas.</p>
+            <p>Layanan terbaik yang disediakan oleh PasPerDok</p>
         </div>
 
         <div class="row">
             <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
                 <div class="icon-box">
-                    <div class="icon"><i class="icofont-heart-beat"></i></div>
-                    <h4><a href="">Lorem Ipsum</a></h4>
-                    <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
+                    <div class="icon"><i class="fas fa-user-md"></i></div>
+                    <h4><a href="">Dokter Yang Berpengalaman</a></h4>
+                    <p>Dokter yang selalu siap sedia dan handal di bidangnya</p>
                 </div>
             </div>
 
             <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
                 <div class="icon-box">
                     <div class="icon"><i class="icofont-drug"></i></div>
-                    <h4><a href="">Sed ut perspiciatis</a></h4>
-                    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+                    <h4><a href="">Obat Yang Terjamin</a></h4>
+                    <p>Obat - obatan yang terjamin oleh Badan Kesehatan</p>
                 </div>
             </div>
 
             <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0">
                 <div class="icon-box">
-                    <div class="icon"><i class="icofont-dna-alt-2"></i></div>
-                    <h4><a href="">Magni Dolores</a></h4>
-                    <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
+                    <div class="icon"><i class="fas fa-user-nurse"></i></div>
+                    <h4><a href="">Perawat Yang Siap Siaga</a></h4>
+                    <p>Perawat - perawat yang siap siaga jika pasien atau dokter membutuhkan</p>
                 </div>
             </div>
 
             <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
                 <div class="icon-box">
-                    <div class="icon"><i class="icofont-heartbeat"></i></div>
-                    <h4><a href="">Nemo Enim</a></h4>
-                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
+                    <div class="icon"><i class="fas fa-ambulance"></i></i></div>
+                    <h4><a href="">Ambulance 24 Jam</a></h4>
+                    <p>Ambulance yang selalu siap kapanpun selama 24 jam penuh untuk pasien</p>
                 </div>
             </div>
 
             <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
                 <div class="icon-box">
-                    <div class="icon"><i class="icofont-disabled"></i></div>
-                    <h4><a href="">Dele cardo</a></h4>
-                    <p>Quis consequatur saepe eligendi voluptatem consequatur dolor consequuntur</p>
+                    <div class="icon"><i class="fas fa-wheelchair"></i></i></div>
+                    <h4><a href="">Perawatan Intensif</a></h4>
+                    <p>
+                        Perawatan yang dilakukan secara intensif dan menyeluruh supaya pasien dapat
+                        kembali sembuh
+                    </p>
                 </div>
             </div>
 
             <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
                 <div class="icon-box">
-                    <div class="icon"><i class="icofont-autism"></i></div>
-                    <h4><a href="">Divera don</a></h4>
-                    <p>Modi nostrum vel laborum. Porro fugit error sit minus sapiente sit aspernatur</p>
+                    <div class="icon"><i class="fas fa-procedures"></i></div>
+                    <h4><a href="">Ruangan Yang Nyaman</a></h4>
+                    <p>
+                        Ruangan yang aman dan nyaman supaya pasien bisa istirahat dengan tenang
+                    </p>
                 </div>
             </div>
 
