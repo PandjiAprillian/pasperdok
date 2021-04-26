@@ -75,7 +75,7 @@
                                         <div class="col-sm-5">
                                             <select class="form-control form-control-sm" name="room_id" id="no_kamar">
                                                 @foreach ($rooms as $room)
-                                                @if ($room->nomor_kamar == 'smtr' || $room->patients_count == 2)
+                                                @if ($room->id == 1 || $room->patients_count == 2)
                                                 @continue
                                                 @elseif ($patient->rawat_inap == 1)
                                                 <option value="{{ $patient->room->id }}" selected>

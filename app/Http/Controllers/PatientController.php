@@ -239,7 +239,7 @@ class PatientController extends Controller
         );
 
         $rooms = Room::withCount('patients')->orderBy('nomor_kamar')->get();
-        dd($rooms->toArray());
+
         for ($i = 0; $i < count(Room::all()); $i++) {
             if ($request->room_id == $rooms[$i]) {
                 if ($rooms[$i]->patients_count >= 2) {

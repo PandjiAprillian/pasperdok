@@ -9,6 +9,10 @@ class Room extends Model
 {
     use HasFactory;
 
+    protected $fillable =[
+        'nomor_kamar', 'maksimal'
+    ];
+
     public function getNomorKamarAttribute($value)
     {
         return strtoupper($value);

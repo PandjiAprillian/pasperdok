@@ -14,7 +14,8 @@ class RoomController extends Controller
      */
     public function index()
     {
-        //
+        $rooms = Room::withCount('patients')->orderBy('nomor_kamar')->paginate(5);
+        return view('admin.room.data-ruangan', compact('rooms'));
     }
 
     /**
@@ -46,7 +47,7 @@ class RoomController extends Controller
      */
     public function show(Room $room)
     {
-        //
+        return view('admin.room.show', compact('room'));
     }
 
     /**
@@ -57,7 +58,7 @@ class RoomController extends Controller
      */
     public function edit(Room $room)
     {
-        //
+        return view('admin.room.edit', compact('room'));
     }
 
     /**
@@ -69,7 +70,14 @@ class RoomController extends Controller
      */
     public function update(Request $request, Room $room)
     {
-        //
+        $data = $request->validate(
+            [
+                'nomor_kamar' => 'required|unique:rooms,nomor_kamar'
+            ]
+        );
+
+        $room->update($data);
+        return redirect()->route('rooms.show', ['room' => $room->id])->withSuccess("Nomor ruangan berhasil diubah!");
     }
 
     /**

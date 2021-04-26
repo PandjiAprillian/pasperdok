@@ -1,6 +1,6 @@
 @extends('layouts.worker')
 
-@section('title', 'Edit Profile')
+@section('title', 'Detail Profile')
 
 @section('content')
 <div class="container" style="margin-top: 50px">
@@ -33,7 +33,7 @@
                                 alt="user photo" width="300" class="img-thumbnail">
                         </div>
                         <div class="col-sm-8">
-                            @include('patient.form', ['button' => 'Update'])
+                            @include('admin.patient.form', ['button' => 'Update'])
                         </div>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
                                     <div class="col-sm-5">
                                         <select class="form-control form-control-sm" name="room_id" id="no_kamar">
                                             @foreach ($rooms as $room)
-                                            @if ($room->nomor_kamar == 'smtr' || $room->patients_count == 2)
+                                            @if ($room->patients_count == 2)
                                             @continue
                                             @elseif ($patient->rawat_inap == 1)
                                             <option value="{{ $patient->room->id }}" selected>

@@ -5,8 +5,7 @@ $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agus
 
 @csrf
 
-@if (request()->is("register") || request()->is("patients/{$patient->id}/edit") ||
-request()->is("admins/data-pasien/{$patient->id}/edit"))
+@if (request()->is("register") || request()->is("patients/{$patient->id}/edit"))
 <div class="form-group row justify-content-center">
     <label for="nik" class="col-sm-6 col-form-label text-md-right">NIK</label>
     <div class="col-sm-6">
@@ -178,41 +177,6 @@ request()->is("admins/data-pasien/{$patient->id}/edit"))
     </div>
 </div>
 
-@auth
-@if (Auth::user()->hasRole('admin'))
-<div class="form-group row">
-    <label for="rawat_inap" class="col-sm-6 col-form-label text-md-right">Perawatan</label>
-    <div class="col-sm-6">
-        <select class="form-control form-control-sm" name="rawat_inap" id="rawat_inap">
-            <option value="1" {{ $patient->rawat_inap == 1 ? 'selected' : '' }}>Rawat Inap</option>
-            <option value="2" {{ $patient->rawat_inap == 2 ? 'selected' : '' }}>Rawat Jalan</option>
-        </select>
-    </div>
-</div>
-
-<div class="form-group row">
-    <label for="no_kamar" class="col-sm-6 col-form-label text-md-right">No.Kamar</label>
-    <div class="col-sm-6">
-        <select class="form-control form-control-sm" name="room_id" id="no_kamar">
-            @foreach ($rooms as $room)
-            @if ($room->nomor_kamar == 'smtr' || $room->patients_count == 2)
-            @continue
-            @elseif ($patient->room_id == $room->id)
-            <option value="{{ $patient->room->id }}" selected>
-                {{ $patient->room->nomor_kamar }}
-            </option>
-            @else
-            <option value="{{ $room->id }}">{{ $room->nomor_kamar }}</option>
-            @endif
-            @endforeach
-        </select>
-    </div>
-</div>
-
-<input type="hidden" name="admin" value="1">
-@endif
-@endauth
-
 <div class="form-group">
     <div class="row">
         <div class="col offset-sm-6">
@@ -220,7 +184,7 @@ request()->is("admins/data-pasien/{$patient->id}/edit"))
         </div>
     </div>
 </div>
-@elseif (request()->is("patients/{$patient->id}") || request()->is("admins/data-pasien/{$patient->id}"))
+@elseif (request()->is("patients/{$patient->id}"))
 <div class="row mb-3">
     <div class="col">
         <label for="nik"><b>NIK</b></label>

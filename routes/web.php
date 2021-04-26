@@ -6,6 +6,8 @@ use App\Http\Controllers\DiseaseController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\NurseController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\RoomController;
+use App\Models\Room;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -37,3 +39,5 @@ Route::get('/admins/data-dokter', [AdminController::class, 'dataDokter'])->name(
 Route::resource('/admins', AdminController::class);
 
 Route::resource('/diseases', DiseaseController::class);
+
+Route::resource('/rooms', RoomController::class);

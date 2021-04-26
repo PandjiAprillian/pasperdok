@@ -26,7 +26,7 @@
         Data
     </div> --}}
 
-    <!-- Pasien -->
+    <!-- Dokter -->
     @if (Auth::user()->hasRole('doctor'))
     <li
         class="nav-item {{ (request()->is('doctors') || request()->is('doctors/' . Auth::user()->doctor->id . '/rekap-jadwal')) ? 'active' : '' }}">
@@ -87,14 +87,16 @@
     </li>
     @endif
 
-    <!-- Dokter -->
+    <!-- Admin -->
     @if (Auth::user()->hasRole('admin'))
     <li class="nav-item
         {{ (request()->is('admins') ||
             request()->is('admins/data-pasien') ||
             request()->is('admins/data-perawat') ||
             request()->is('admins/data-dokter') ||
-            request()->is('diseases'))
+            request()->is('diseases') ||
+            request()->is('rooms') ||
+            request()->is('admins/data-admin'))
             ? 'active'
             : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
@@ -120,8 +122,8 @@
                 <a class="collapse-item" href="{{ route('diseases.index') }}">
                     {!! request()->is('diseases') ? '<b>Data Penyakit</b>' : 'Data Penyakit' !!}
                 </a>
-                <a class="collapse-item" href="#">
-                    Data Kamar
+                <a class="collapse-item" href="{{ route('rooms.index') }}">
+                    {!! request()->is('rooms') ? '<b>Data Kamar</b>' : 'Data Kamar' !!}
                 </a>
                 <a class="collapse-item" href="#">
                     Rekapitulasi Jadwal
