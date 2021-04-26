@@ -33,9 +33,10 @@ Route::post('/out-attendance', [AttendanceController::class, 'outAttendance'])->
 Route::get('/admins/data-pasien', [AdminController::class, 'dataPasien'])->name('admins.data.patient');
 Route::get('/admins/data-pasien/{patient}', [AdminController::class, 'showDataPasien'])->name('admins.show.patient');
 Route::get('/admins/data-pasien/{patient}/edit', [AdminController::class, 'editDataPasien'])->name('admins.edit.patient');
-Route::delete('/admins/{patient}', [AdminController::class, 'destroyDataPasien'])->name('admins.destroy.patient');
+Route::delete('/admins/{patient}/hapus-pasien', [AdminController::class, 'destroyDataPasien'])->name('admins.destroy.patient');
 Route::get('/admins/data-perawat', [AdminController::class, 'dataPerawat'])->name('admins.data.nurse');
 Route::get('/admins/data-dokter', [AdminController::class, 'dataDokter'])->name('admins.data.doctor');
+Route::get('/admins/data-admin', [AdminController::class, 'dataAdmin'])->name('admins.data.admins');
 Route::resource('/admins', AdminController::class);
 
 Route::resource('/diseases', DiseaseController::class);

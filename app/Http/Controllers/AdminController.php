@@ -8,8 +8,12 @@ use App\Models\Doctor;
 use App\Models\Nurse;
 use App\Models\Patient;
 use App\Models\Room;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminController extends Controller
 {
@@ -23,7 +27,15 @@ class AdminController extends Controller
         $patientCount = Patient::count();
         $nurseCount = Nurse::count();
         $doctorCount = Doctor::count();
-        return view('admin.home', compact('patientCount', 'nurseCount', 'doctorCount'));
+        $diseasesCount = Disease::count();
+        $roomsCount = Room::count();
+        return view('admin.home', compact('patientCount', 'nurseCount', 'doctorCount', 'diseasesCount', 'roomsCount'));
+    }
+
+    public function dataAdmin()
+    {
+        $admins = Admin::orderBy('nama')->paginate(5);
+        return view('admin.data-admin', compact('admins'));
     }
 
     /**
@@ -33,8 +45,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        // $patients = Patient::paginate(10);
-        // return view('admin.data-pasien', compact('patients'));
+        return view('admin.create');
     }
 
     /**
@@ -45,7 +56,46 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(
+            [
+                'nama'          => 'required|string|max:50',
+                'email'         => 'required|email|unique:users',
+                'password'      => 'required|confirmed',
+                'alamat'        => 'required',
+                'jenis_kelamin' => 'required|in:L,P',
+                'handphone'     => 'required|numeric',
+                'photo'         => 'file|image|max:5000',
+            ]
+        );
+
+        if ($request->hasFile('photo')) {
+            $namaFile = Str::slug($request->nama) . '-' . time() . '.' . $request->photo->getClientOriginalExtension();
+            $request->photo->storeAs('public/uploads/image', $namaFile);
+        } else {
+            $namaFile = 'default_profile.jpg';
+        }
+
+        $userAsAdmin = User::create(
+            [
+                'nama'     => $request->nama,
+                'email'    => $request->email,
+                'password' => Hash::make($request->password)
+            ]
+        );
+
+        $userAsAdmin->admin()->create(
+            [
+                'nama'          => $request->nama,
+                'alamat'        => $request->alamat,
+                'jenis_kelamin' => $request->jenis_kelamin,
+                'handphone'     => $request->handphone,
+                'photo'         => $namaFile,
+            ]
+        );
+
+        $userAsAdmin->assignRole('admin');
+        $adminId = Admin::where('user_id', $userAsAdmin->id)->first();
+        return redirect()->route('admins.show', ['admin' => $adminId->id])->withSuccess("Admin {$adminId->nama} berhasil ditambahkan!");
     }
 
     /**
@@ -56,7 +106,7 @@ class AdminController extends Controller
      */
     public function show(Admin $admin)
     {
-        //
+        return view('admin.show', compact('admin'));
     }
 
     /**
@@ -67,7 +117,7 @@ class AdminController extends Controller
      */
     public function edit(Admin $admin)
     {
-        //
+        return view('admin.edit', compact('admin'));
     }
 
     /**
@@ -79,7 +129,46 @@ class AdminController extends Controller
      */
     public function update(Request $request, Admin $admin)
     {
-        //
+        $request->validate(
+            [
+                'nama'          => 'required|min:5|max:50',
+                'email'         => 'required|email|unique:users,email,' . $admin->user->id,
+                'password'      => ($request->password == null ? 'sometimes' : 'confirmed'),
+                'alamat'        => 'required',
+                'jenis_kelamin' => 'required|in:L,P',
+                'handphone'     => 'required|numeric',
+                'photo'         => 'file|image|max:5000',
+            ]
+        );
+
+        if ($request->hasFile('photo')) {
+            $namaFile = Str::slug($request->nama) . '-' . time() . '.' . $request->photo->getClientOriginalExtension();
+            $request->photo->storeAs('public/uploads/image', $namaFile);
+        } else {
+            $namaFile = $admin->photo ?? 'default_profile.jpg';
+        }
+
+        User::where('id', $admin->user->id)->first()->update(
+            [
+                'nama'     => $request->nama,
+                'email'    => $request->email,
+                'password' => ($request->password == null ? $admin->user->password : Hash::make($request->password)),
+            ]
+        );
+
+        $admin->update(
+            [
+                'nama'          => $request->nama,
+                'alamat'        => $request->alamat,
+                'jenis_kelamin' => $request->jenis_kelamin,
+                'handphone'     => $request->handphone,
+                'photo'         => $namaFile
+            ]
+        );
+
+        Alert::success("Berhasil!", "Data admin {$request->nama} berhasil di update!");
+        return redirect()->route('admins.show', ['admin' => $admin->id]);
+
     }
 
     /**
@@ -90,7 +179,9 @@ class AdminController extends Controller
      */
     public function destroy(Admin $admin)
     {
-        //
+        User::where('id', $admin->user->id)->first()->delete();
+        Auth::logout();
+        return redirect('/')->withSuccess("Data admin {$admin->nama} berhasil dihapus!");
     }
 
     //? admin.data.pasien
@@ -129,7 +220,7 @@ class AdminController extends Controller
 
     public function destroyDataPasien(Patient $patient)
     {
-        $patient->delete();
+        User::where('id', $patient->user->id)->first()->delete();
         return redirect()->route('admins.data.patient')->withSuccess("Pasien {$patient->nama} berhasil dihapus!");
     }
 
