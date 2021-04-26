@@ -125,8 +125,8 @@
                 <a class="collapse-item" href="{{ route('rooms.index') }}">
                     {!! request()->is('rooms') ? '<b>Data Kamar</b>' : 'Data Kamar' !!}
                 </a>
-                <a class="collapse-item" href="#">
-                    Rekapitulasi Jadwal
+                <a class="collapse-item" href="{{ route('attendances.index') }}">
+                    {!! request()->is('attendances') ? '<b>Rekapitulasi Jadwal</b>' : 'Rekapitulasi Jadwal' !!}
                 </a>
             </div>
         </div>

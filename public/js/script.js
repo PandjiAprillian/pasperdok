@@ -12,6 +12,28 @@ $('input[type="file"]').on('change', function () {
         html(filenames.join(', '));
 });
 
+let iconHapus = document.querySelectorAll('.icon-hapus');
+iconHapus.forEach(function (item) {
+    item.addEventListener('click', rekapDelete);
+});
+
+function rekapDelete(event) {
+    event.preventDefault();
+    Swal.fire({
+        title: 'Anda yakin?',
+        text: 'Hapus jadwal  ' + event.target.getAttribute('data-name') + ' ?',
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonColor: '#6c757d',
+        confirmButtonColor: '#dc3545',
+        confirmButtonText: 'Ya, hapus!',
+        reverseButtons: true,
+    }).then((result) => {
+        if (result.value) {
+            event.target.parentElement.submit();
+        }
+    })
+};
 
 let btnHapus = document.getElementById('btn-hapus');
 btnHapus.addEventListener('click', deleteConfirmation);
@@ -33,24 +55,3 @@ function deleteConfirmation(event) {
         }
     })
 };
-
-let btnKeluar = document.getElementById('btn-keluar');
-btnKeluar.addEventListener('click', confirmation);
-
-function confirmation(event) {
-    event.preventDefault();
-    Swal.fire({
-        'title': 'Absensi Keluar?',
-        'text': 'Anda sudah selesai bekerja?',
-        'icon': 'warning',
-        showCancelButton: true,
-        cancelButtonColor: '#6c757d',
-        confirmButtonColor: '#1cc88a',
-        confirmButtonText: 'Selesai',
-        reverseButtons: true,
-    }).then((result) => {
-        if (result.value) {
-            event.target.parentElement.submit();
-        }
-    });
-}

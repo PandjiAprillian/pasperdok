@@ -20,7 +20,8 @@ class AttendanceController extends Controller
      */
     public function index()
     {
-        //
+        $attendances = Attendance::orderBy('tanggal')->paginate(5);
+        return view('admin.attendances.index', compact('attendances'));
     }
 
     /**
@@ -182,6 +183,7 @@ class AttendanceController extends Controller
      */
     public function destroy(Attendance $attendance)
     {
-        //
+        $attendance->delete();
+        return redirect()->route('attendances.index')->withSuccess("Data jadwal {$attendance->attendanceable->nama} pada tanggal {$attendance->tanggal} berhasil dihapus");
     }
 }
