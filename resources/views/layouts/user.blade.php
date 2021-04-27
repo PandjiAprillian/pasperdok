@@ -22,18 +22,18 @@
         rel="stylesheet">
 
     <!-- Vendor CSS Files -->
-    <link href="/vendor/patient/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/vendor/patient/icofont/icofont.min.css" rel="stylesheet">
-    <link href="/vendor/patient/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="/vendor/patient/venobox/venobox.css" rel="stylesheet">
-    <link href="/vendor/patient/animate.css/animate.min.css" rel="stylesheet">
-    <link href="/vendor/patient/remixicon/remixicon.css" rel="stylesheet">
-    <link href="/vendor/patient/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="/vendor/patient/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    <link href="{{ asset('/vendor/patient/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/vendor/patient/icofont/icofont.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/vendor/patient/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/vendor/patient/venobox/venobox.css') }}" rel="stylesheet">
+    <link href="{{ asset('/vendor/patient/animate.css/animate.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/vendor/patient/remixicon/remixicon.css') }}" rel="stylesheet">
+    <link href="{{ asset('/vendor/patient/owl.carousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/vendor/patient/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet">
 
     <!-- Template Main CSS File -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link href="/css/style.css" rel="stylesheet">
+    <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -60,19 +60,19 @@
     <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
 
     <!-- Vendor JS Files -->
-    <script src="/vendor/patient/jquery/jquery.min.js"></script>
-    <script src="/vendor/patient/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="/vendor/patient/jquery.easing/jquery.easing.min.js"></script>
-    <script src="/vendor/patient/php-email-form/validate.js"></script>
-    <script src="/vendor/patient/venobox/venobox.min.js"></script>
-    <script src="/vendor/patient/waypoints/jquery.waypoints.min.js"></script>
-    <script src="/vendor/patient/counterup/counterup.min.js"></script>
-    <script src="/vendor/patient/owl.carousel/owl.carousel.min.js"></script>
-    <script src="/vendor/patient/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="{{ asset('/vendor/patient/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('/vendor/patient/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('/vendor/patient/jquery.easing/jquery.easing.min.js') }}"></script>
+    <script src="{{ asset('/vendor/patient/php-email-form/validate.js') }}"></script>
+    <script src="{{ asset('/vendor/patient/venobox/venobox.min.js') }}"></script>
+    <script src="{{ asset('/vendor/patient/waypoints/jquery.waypoints.min.js') }}"></script>
+    <script src="{{ asset('/vendor/patient/counterup/counterup.min.js') }}"></script>
+    <script src="{{ asset('/vendor/patient/owl.carousel/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('/vendor/patient/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
 
     <!-- Template Main JS File -->
-    <script src="/js/main.js"></script>
-    <script src="/js/script.js"></script>
+    <script src="{{ asset('/js/main.js') }}"></script>
+    <script src="{{ asset('/js/script.js') }}"></script>
 
     {{-- IconiFy --}}
     <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>

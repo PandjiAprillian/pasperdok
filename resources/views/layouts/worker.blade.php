@@ -16,13 +16,13 @@
     <title>@yield('title', 'PasPerDok')</title>
 
     <!-- Custom fonts for this template-->
-    <link href="/vendor/sb-admin/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/vendor/sb-admin/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="{{ asset('/css/sb-admin-2.min.css') }}" rel="stylesheet">
 
 </head>
 
@@ -87,16 +87,16 @@
 
 
     <!-- Bootstrap core JavaScript-->
-    <script src="/vendor/sb-admin/jquery/jquery.min.js"></script>
-    <script src="/vendor/sb-admin/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('/vendor/sb-admin/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('/vendor/sb-admin/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="/vendor/sb-admin/jquery-easing/jquery.easing.min.js"></script>
+    <script src="{{ asset('/vendor/sb-admin/jquery-easing/jquery.easing.min.js') }}"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="/js/sb-admin-2.min.js"></script>
-    <script src="/js/script.js"></script>
-    <script src="/js/absensi.js"></script>
+    <script src="{{ asset('/js/sb-admin-2.min.js') }}"></script>
+    <script src="{{ asset('/js/script.js') }}"></script>
+    <script src="{{ asset('/js/absensi.js') }}"></script>
     @include('sweetalert::alert')
     @endif
 

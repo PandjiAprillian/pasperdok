@@ -14,7 +14,6 @@ class DoctorSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\Doctor::factory()->count(20)->create();
         $faker = \Faker\Factory::create('id_ID');
         $faker->seed(123);
 

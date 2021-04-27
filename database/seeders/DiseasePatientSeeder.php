@@ -13,7 +13,6 @@ class DiseasePatientSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\DiseasePatient::factory()->count(50)->create();
         $faker = \Faker\Factory::create('id_ID');
         $faker->seed(749);
 

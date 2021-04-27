@@ -13,7 +13,6 @@ class RoomSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\Room::factory()->count(30)->create();
         $faker = \Faker\Factory::create('id_ID');
         $faker->seed(623);
 

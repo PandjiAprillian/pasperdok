@@ -31,9 +31,6 @@
                 <li class="{{ request()->is('/') ? 'active' : '' }}">
                     <a href="{{ request()->is('/') ? '#hero' : '/' }}">Home</a>
                 </li>
-                {{-- @auth
-                <li><a href="{{ url('/post') }}">Post</a></li>
-                @endauth --}}
                 <li>
                     <a href="{{ request()->is('/') ? '#about' : '/#about' }}">About</a>
                 </li>
@@ -41,7 +38,7 @@
                     <a href="{{ request()->is('/') ? '#services' : '/#services' }}">Services</a>
                 </li>
                 <li>
-                    <a href="{{ request()->is('/') ? '#contact' : '/#contact' }}">Location</a>
+                    <a href="{{ request()->is('/') ? '#location' : '/#location' }}">Location</a>
                 </li>
                 @guest
                 <li class="drop-down"><a href="" onclick="event.preventDefault();">SignIn / SignUp</a>
