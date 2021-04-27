@@ -16,6 +16,11 @@ use Illuminate\Support\Str;
 
 class NurseController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role:admin')->except('index', 'edit', 'show', 'update', 'rekapJadwal');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +31,7 @@ class NurseController extends Controller
         $date = new DateTime('now', new DateTimeZone('Asia/Jakarta'));
         $dateNow = $date->format('Y-m-d');
 
-        $patients = Patient::where('room_id', Auth::user()->nurse->room_id)->get();
+        $patients = Patient::where('room_id', Auth::user()->nurse->room_id)->paginate(5);
 
         $attendances = Attendance::where(
             [

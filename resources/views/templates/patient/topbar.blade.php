@@ -9,9 +9,12 @@
         <div>
         </div>
         <div class="social-links">
-            <a href="https://github.com/PandjiAprillian" target="blank" class="github"><i class="icofont-github"></i></a>
-            <a href="https://www.facebook.com/PandjiAprilian/" target="blank" class="facebook"><i class="icofont-facebook"></i></a>
-            <a href="https://www.instagram.com/pandjiaprillian/" target="blank" class="instagram"><i class="icofont-instagram"></i></a>
+            <a href="https://github.com/PandjiAprillian" target="blank" class="github"><i
+                    class="icofont-github"></i></a>
+            <a href="https://www.facebook.com/PandjiAprilian/" target="blank" class="facebook"><i
+                    class="icofont-facebook"></i></a>
+            <a href="https://www.instagram.com/pandjiaprillian/" target="blank" class="instagram"><i
+                    class="icofont-instagram"></i></a>
             <a href="https://pandjiaprillian.github.io/" target="blank" class="world"><i class="icofont-world"></i></a>
         </div>
     </div>
@@ -64,8 +67,19 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        @if (Auth::user()->hasRole('patient'))
                         <a href="{{ route('patients.show', ['patient' => Auth::user()->patient->id ?? 1]) }}"
                             class="dropdown-item px-3">Profile</a>
+                        @elseif (Auth::user()->hasRole('nurse'))
+                        <a href="{{ route('nurses.index') }}"
+                            class="dropdown-item px-3">Home</a>
+                        @elseif (Auth::user()->hasRole('doctor'))
+                        <a href="{{ route('doctors.index') }}"
+                            class="dropdown-item px-3">Home</a>
+                        @elseif (Auth::user()->hasRole('admin'))
+                        <a href="{{ route('admins.index') }}"
+                            class="dropdown-item px-3">Home</a>
+                        @endif
                         <a class="dropdown-item px-3" href="{{ route('logout') }}" onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">
                             Logout

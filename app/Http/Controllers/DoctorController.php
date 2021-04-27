@@ -18,6 +18,11 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class DoctorController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role:admin')->except('index', 'edit', 'show', 'update', 'rekapJadwal');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -180,12 +185,11 @@ class DoctorController extends Controller
                 'nama'             => 'required|string|max:50',
                 'email'            => 'required|email|unique:users,email,' . $doctor->user->id,
                 'password'         => ($request->password == null ? 'sometimes' : 'confirmed'),
-                'tanggal_lahir' => 'required|date|before:-10 years|after:-100 years',
+                'tanggal_lahir'    => 'required|date|before:-10 years|after:-100 years',
                 'alamat'           => 'required',
                 'jenis_kelamin'    => 'required|in:L,P',
                 'handphone'        => 'required|numeric',
                 'photo'            => 'file|image|max:5000',
-                'disease_id'       => 'required|exists:\App\Models\Disease,id'
             ]
         );
 

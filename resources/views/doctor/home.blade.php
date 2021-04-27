@@ -46,14 +46,14 @@
                                     @if ($patient == null)
                                         @continue
                                     @endif
-                                    <tr>
+                                    <tr class="{{ $patient->rawat_inap == 0 ? 'bg-warning text-light' : '' }}">
                                         <td>{{ $patients->firstItem() + $loop->iteration - 1 }}</td>
                                         <td>{{ $patient->nama }}</td>
                                         <td>{{ \Carbon\Carbon::parse($patient->tanggal_lahir)->age }} Tahun</td>
                                         <td>{{ ($patient->jenis_kelamin == 'L') ? 'Laki - Laki' : 'Perempuan' }}</td>
                                         <td>{{ $patient->handphone }}</td>
                                         <td>
-                                            <a href="{{ route('patients.show', ['patient' => $patient->id]) }}" class="btn btn-sm btn-warning">Detail Pasien</a>
+                                            <a href="{{ route('patients.show', ['patient' => $patient->id]) }}" class="btn btn-sm btn-info">Detail Pasien</a>
                                         </td>
                                     </tr>
                                 @empty
