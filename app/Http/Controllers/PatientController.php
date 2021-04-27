@@ -234,7 +234,7 @@ class PatientController extends Controller
         $request->validate(
             [
                 'rawat_inap' => 'in:1,2',
-                // 'room_id'    => 'exists:rooms,\App\Models\Room,id'
+                'room_id'    => 'exists:\App\Models\Room,id'
             ]
         );
 
@@ -261,6 +261,10 @@ class PatientController extends Controller
                     'rawat_inap' => $request->rawat_inap,
                 ]
             );
+        }
+
+        if ($request->admin) {
+            return redirect()->route('admins.show.patient', ['patient' => $patient->id])->withSuccess("Data perawatan {$patient->nama} berhasil diupdate!");
         }
 
         return redirect('/doctors')->with('success', "Data rawat berhasil disimpan!");

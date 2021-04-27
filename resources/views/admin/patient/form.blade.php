@@ -5,7 +5,7 @@ $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agus
 
 @csrf
 
-@if (request()->is("admins/data-pasien/create")))
+@if (request()->is("admins/data-pasien/create") || request()->is("admins/data-pasien/{$patient->id}/edit"))
 <div class="form-group row justify-content-center">
     <label for="nik" class="col-sm-6 col-form-label text-md-right">NIK</label>
     <div class="col-sm-6">

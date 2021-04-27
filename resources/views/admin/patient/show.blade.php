@@ -10,7 +10,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="row justify-content-between align-items-center px-3">
-                        Data pasien {{ $patient->nama }}
+                        <h6 class="m-0 font-weight-bold text-primary d-inline">Data pasien {{ $patient->nama }}</h6>
                         <div class="row">
                             <a href="{{ route('admins.edit.patient', ['patient' => $patient->id]) }}"
                                 class="btn btn-success mr-2">Edit Profile</a>
@@ -37,54 +37,54 @@
                         </div>
                     </div>
                 </div>
-                @if (Auth::user()->hasRole('doctor') || Auth::user()->hasRole('admin'))
                 <div class="card-footer text-muted">
-                    <fieldset
-                        {{ ($patient->rawat_inap == 1 || $patient->rawat_inap == 2) ? 'disabled="disabled"' : '' }}>
-                        <div class="row align-items-center justify-content-center">
+                    <form action="{{ route('patients.perawatan', ['patient' => $patient->id]) }}" method="post">
+                        @method('PATCH')
+                        @csrf
+                        <input type="hidden" name="admin" value="1">
+                        <div class="row align-items-center">
                             <div class="col">
                                 <div class="form-group row align-items-center">
                                     <label for="rawat_inap"
-                                        class="col-sm-3 col-form-label text-md-right">Perawatan</label>
+                                        class="col-sm-4 col-form-label text-md-right">Perawatan</label>
                                     <div class="col-sm-5">
                                         <select class="form-control form-control-sm" name="rawat_inap" id="rawat_inap">
-                                            @if ($patient->rawat_inap == 1 || $patient->rawat_inap == 2)
-                                            <option value="{{ $patient->rawat_inap }}">
-                                                {{ $patient->rawat_inap == 1 ? 'Rawat Inap' : 'Rawat Jalan' }}
+                                            <option value="1" {{ $patient->rawat_inap == 1 ? 'selected' : '' }}>Rawat
+                                                Inap
                                             </option>
-                                            @else
-                                            <option value="1">Rawat Inap</option>
-                                            <option value="2">Rawat Jalan</option>
-                                            @endif
+                                            <option value="2" {{ $patient->rawat_inap == 2 ? 'selected' : '' }}>Rawat
+                                                Jalan
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="col">
                                 <div
-                                    class="form-group row align-items-center justify-content-end {{ $patient->rawat_inap == 2 ? 'd-none' : '' }}">
-                                    <label for="no_kamar" class="col-sm-3 col-form-label text-md-right">No.Kamar</label>
+                                    class="form-group row align-items-center justify-content-center {{ $patient->rawat_inap == 2 ? 'd-none' : '' }}">
+                                    <label for="no_kamar" class="col-sm-4 col-form-label text-md-right">No.Kamar</label>
                                     <div class="col-sm-5">
                                         <select class="form-control form-control-sm" name="room_id" id="no_kamar">
                                             @foreach ($rooms as $room)
                                             @if ($room->patients_count == 2)
                                             @continue
-                                            @elseif ($patient->rawat_inap == 1)
-                                            <option value="{{ $patient->room->id }}" selected>
-                                                {{ $patient->room->nomor_kamar }}
-                                            </option>
                                             @else
-                                            <option value="{{ $room->id }}">{{ $room->nomor_kamar }}</option>
+                                            <option value="{{ $room->id }}"
+                                                {{ ($patient->room_id == $room->id) ? 'selected' : '' }}>
+                                                {{ $room->nomor_kamar }}</option>
                                             @endif
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
                             </div>
+                            <div class="col d-flex align-items-center justify-content-end">
+                                <button type="submit" class="btn btn-info" id="btn-update"
+                                    data-name="{{ $patient->nama }}">Update Perawatan</a>
+                            </div>
                         </div>
-                    </fieldset>
+                    </form>
                 </div>
-                @endif
             </div>
         </div>
     </div>

@@ -25,17 +25,21 @@
 
         <nav class="nav-menu d-none d-lg-block">
             <ul>
-                @if (request()->is('/'))
-                <li class="active"><a href="#hero">Home</a></li>
-                @auth
+                <li class="{{ request()->is('/') ? 'active' : '' }}">
+                    <a href="{{ request()->is('/') ? '#hero' : '/' }}">Home</a>
+                </li>
+                {{-- @auth
                 <li><a href="{{ url('/post') }}">Post</a></li>
-                @endauth
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#contact">Location</a></li>
-                @elseif (request()->is('post'))
-                <li><a href="{{ url('/') }}">Home</a></li>
-                @endif
+                @endauth --}}
+                <li>
+                    <a href="{{ request()->is('/') ? '#about' : '/#about' }}">About</a>
+                </li>
+                <li>
+                    <a href="{{ request()->is('/') ? '#services' : '/#services' }}">Services</a>
+                </li>
+                <li>
+                    <a href="{{ request()->is('/') ? '#contact' : '/#contact' }}">Location</a>
+                </li>
                 @guest
                 <li class="drop-down"><a href="" onclick="event.preventDefault();">SignIn / SignUp</a>
                     <ul>

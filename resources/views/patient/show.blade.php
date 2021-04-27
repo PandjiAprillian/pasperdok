@@ -8,7 +8,7 @@
 
 @section('content')
 <div class="container"
-    style="{{ (str_replace(url('/'), '', url()->previous()) == '/doctors') ? 'margin-bottom: 50px' : 'margin-top: 180px' }}">
+    style="{{ (str_replace(url('/'), '', url()->previous()) == '/doctors') ? 'margin-bottom: 50px' : 'margin-top: 150px; margin-bottom: 50px' }}">
     <div class="row">
 
         <div class="col-12">
