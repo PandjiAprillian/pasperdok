@@ -206,9 +206,7 @@ $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agus
     </div>
 </div>
 
-@if (isset($_GET['admin']))
 <input type="hidden" name="admin" value="1">
-@endif
 
 <div class="form-group">
     <div class="row">
