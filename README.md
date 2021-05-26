@@ -9,5 +9,6 @@ yang sudah saling berelasi. Dan juga menggunakan package *laravel permission* da
 - Admin bisa melihat dan melakukan CRUD terhadap semua data, dari data pasien, perawat, dokter, penyakit, ruangan, dan data admin itu sendiri, tetapi untuk edit dan delete admin hanya bisa dilakukan oleh admin yang login saja. Dalam artian, admin lain tidak bisa menghapus atau mengedit data admin lain, hanya dirinya sendiri.
 
 * untuk email dan password admin, bisa di dilihat di bagian `database/seeders/AdminSeeder.php`
+* untuk upload gambar, buat folder di `storage/app/public` dengan nama folder `uploads/image`, jadi struktur akhirnya adalah `storage/app/public/uploads/image`, kemudian jalankan `php artisan storage:link`
 
  ##### Web ini dibuat menggunakan [Laravel 8](https://laravel.com/docs/8.x)
